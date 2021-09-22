@@ -1,11 +1,11 @@
 # Cómo colaborar en un proyecto en GitHub
 
-*   Fork del repositorio
-*   Clonar el repositorio
-*   Actualizar la rama master
-*   Crear una rama
-*   Hacer los cambios
-*   Hacer un Pull Request
+* Fork del repositorio
+* Clonar el repositorio
+* Actualizar la rama master
+* Crear una rama
+* Hacer los cambios
+* Hacer un Pull Request
 
 ## Fork del repositorio
 
