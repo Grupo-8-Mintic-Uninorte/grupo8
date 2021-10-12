@@ -1,0 +1,17 @@
+<!--
+	extiende del Layout a emplear  desde la carpeta layouts
+-->
+{%extends './layouts/layout_example.html' %}
+
+<!--
+	Ingresar el contenido segun los bloques
+	definidos dentro del layouttt escogido
+-->
+{%block content %}
+	<h1>Pagina de ejemplo</h1>
+	{%for i in range(100) %}
+		<p>
+			{{render_partial('./components/component_example_link.html', url='https://google.com', label_url="enalce " + i|string)}}
+		</p>
+	{% endfor %}
+{% endblock%}

@@ -1,0 +1,42 @@
+<!--
+	extiende del Layout a emplear  desde la carpeta layouts
+-->
+{%extends './layouts/layout_base.html' %}
+{%block title %}AGN{% endblock %}
+<!--
+	Ingresar el contenido segun los bloques
+	definidos dentro del layouttt escogido
+-->
+{%block header %}
+	<div class="row">
+		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+			<div class="card border-0 shadow rounded-3 my-5">
+				<div class="card-body p-4 p-sm-5">
+					<h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
+					<form action="/" method="POST" novalidate>
+						{{ form.hidden_tag() }}
+						<select class="form-select form-select-lg mb-3" aria-label="Select a user profile">
+							<option selected>Select a user profile</option>
+							<option value="1">Administrator</option>
+							<option value="2">Professor</option>
+							<option value="3">Student</option>
+						</select>
+						<div class="form-floating mb-3">
+							{{ form.email(size=30) }}
+							<label for="floatingInput">{{ form.email.label }}</label>
+						</div>
+						<div class="form-floating mb-3">
+							{{ form.password(size=30) }}
+							<label for="floatingPassword">{{ form.password.label }}</label>
+						</div>
+						<div class="d-grid gap-2 d-md-flex justify-content-between">
+							<a href="/remember" class="btn btn-light">Recovery password...</a>
+							{{ form.submit() }}
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+{% endblock%}
