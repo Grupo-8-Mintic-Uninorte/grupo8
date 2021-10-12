@@ -1,5 +1,8 @@
 # Grupo 8
 
+## Diseño
+[Diseño plantillas](https://www.figma.com/file/foeCJgr3Mo0N2j0mOmZZyd/Mi-primer-diseño-en-figma?node-id=0%3A1)
+
 ## Como iniciar
 
 - Descargar python de la pagina oficial en [https://python.org/downloads](https://www.python.org/downloads/)
