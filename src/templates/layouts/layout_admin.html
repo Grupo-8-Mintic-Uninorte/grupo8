@@ -1,1 +1,18 @@
 {%extends './layouts/layout_base.html'%}
+{%block title%}Admin {%block subtitle%}{%endblock%}{%endblock%}
+{%block content%}
+
+<div class="d-flex flex-column vw-100">
+	{{render_partial('./components/component_header_admin.html')}}
+	<div class="d-flex flex-row flex-fill">
+		<div class="col-2 bg-primary bg-opacity-75 d-flex flex-column">
+			{{render_partial('./components/component_sidebar_navigate.html')}}
+		</div>
+		<div class="vr"></div>
+		<div class="col-10">
+			{%block right%}
+			{%endblock%}
+		</div>
+	</div>
+</div>
+{%endblock%}

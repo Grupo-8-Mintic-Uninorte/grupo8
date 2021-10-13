@@ -1,14 +1,25 @@
 <ul class="nav flex-column">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Active</a>
+    <a id="home" class="nav-link text-white" aria-current="page" href="/admin">HOME</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a id="users" class="nav-link text-white" aria-current="page" href="/admin/users">USERS</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a id="courses" class="nav-link text-white" aria-current="page" href="/admin/courses">COURSES</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link disabled">Disabled</a>
+	<li class="nav-item">
+    <a id="activities" class="nav-link text-white" aria-current="page" href="/admin/activities">ACTIVITIES</a>
   </li>
+
 </ul>
+<ul class="mt-auto nav flex-column">
+	<li class="nav-item">
+		<a id="profile" href="/admin/profile" class="nav-link text-white">PROFILE</a>
+	</li>
+</ul>
+<script>
+	(()=>{
+		document.querySelector("#{{request.endpoint}}").classList.add("bg-primary")
+	})()
+</script>
