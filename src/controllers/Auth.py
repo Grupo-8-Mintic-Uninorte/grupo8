@@ -1,5 +1,5 @@
 from flask import render_template, redirect
-from controllers.forms import LoginForm, RememberPasswordForm
+from controllers.Forms import LoginForm, RememberPasswordForm
 
 class Auth:
     def login():
@@ -8,7 +8,7 @@ class Auth:
 
     # @requires_auth
     def remember():
-        form = RememberPasswordForm()
+        form = RememberPasswordForm()()
         return render_template('./pages/page_remember_password.html', form=form)
 
     def submit():
