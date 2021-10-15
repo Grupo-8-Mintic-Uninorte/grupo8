@@ -15,7 +15,7 @@ El primer paso es hacer "Fork" del repositorio.
 
 Después de tener el repositorio en nuestra cuenta, seleccionar la dirección del repositorio "SSH o HTTP" y clonar:
 
-`$ git clone https://github.com/emarrokin/grupo8.git`
+`$ git clone https://github.com/Grupo-8-Mintic-Uninorte/grupo8.git`
 
 Dentro de la carpeta que genera, comprobar la URL del repositorio:
 
