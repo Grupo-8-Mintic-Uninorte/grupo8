@@ -23,7 +23,7 @@ Dentro de la carpeta que genera, comprobar la URL del repositorio:
 
 Antes de realizar modificaciones agregar la URL del repositorio original del proyecto:
 
-`$ git remote add upstream https://github.com/User/grupo8`
+`$ git remote add upstream https://github.com/[user_name]/grupo8`
 
 Comprobar
 
