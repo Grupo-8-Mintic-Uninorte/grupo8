@@ -1,0 +1,7 @@
+{% if plural == False %}
+<i class="fas fa-{{icons}} {{style}}"></i>
+{% else %}
+	{% for icon in icons %}
+		<i class="fas fa-{{icon}} {{style}}"></i>
+	{% endfor %}
+{% endif %}

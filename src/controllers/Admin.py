@@ -1,16 +1,26 @@
 from flask import render_template
+from controllers.Decorators import access
+
+from jinja_partials import render_partial
+
+from controllers.Forms import UserProfile
+
+# para generar una cadena aleatoria
+import random
+import string
+letters = string.ascii_uppercase
 
 
 class Admin:
     def home():
         return render_template('./pages/admin/admin_home.html')
 
-    #USERS
+    # USERS
     def users():
         return render_template('./pages/admin/admin_users.html')
 
     def user(user_id=None):
-        return 'user {0}'.format(user_id)
+        return render_template('./pages/page_user.html', id=user_id)
 
     def user_new():
         return 'new user'
@@ -21,9 +31,35 @@ class Admin:
     def user_delete(user_id=None):
         return 'delete user'
 
-    #ACTIVITIES
+    # ACTIVITIES
     def activities():
-        return render_template('./pages/admin/admin_activities.html')
+        table = {
+            "titles": ['', 'actividad', 'curso', 'codigo', 'actiones'],
+            "styles": ['', '',          '',      '',       'd-flex justify-content-around'],
+            "rows": [
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+            ]
+        }
+        return render_template('./pages/admin/admin_activities.html', table=table)
 
     def activity(activity_id=None):
         return 'activity {}'.format(activity_id)
@@ -37,9 +73,35 @@ class Admin:
     def activity_delete(activity_id=None):
         return 'delete activity {}'.format(activity_id)
 
-    #COURSES
+    # COURSES
     def courses():
-        return render_template('./pages/admin/admin_courses.html')
+        table = {
+            "titles": ['', 'curso', 'profesor', 'codigo', 'actiones'],
+            "styles": ['', '',          '',      '',       'd-flex justify-content-around'],
+            "rows": [
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])]
+            ]
+        }
+        return render_template('./pages/admin/admin_courses.html', table = table)
 
     def course(course_id=None):
         return 'course {}'.format(course_id)
@@ -54,4 +116,5 @@ class Admin:
         return 'delete course {}'.format(course_id)
 
     def profile():
-        return render_template('./pages/admin/admin_profile.html')
+        form = UserProfile()
+        return render_template('./pages/admin/admin_profile.html', form=form)

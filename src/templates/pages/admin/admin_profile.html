@@ -1,2 +1,53 @@
-{%extends './layouts/layout_admin.html' %}
-{%block subtitle%}Courses{%endblock%}
+{%extends './layouts/layout_admin.html' %} {%block subtitle%}Profile{%endblock%}
+{%block right%}
+<div class="row col-8 d-flex flex-row align-content-start h-100 mx-auto p-3" >
+	<div class="row mb-5">
+		<picture class="col-6 custom-image text-left d-flex flex-strech" >
+			<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5c8xS0id3eVOCx_pYT9JFGdTjwOc3CPdjnA&usqp=CAU" style="max-height:10rem;width: auto" class="img-fluid img-thumbnail" alt="..." />
+		</picture>
+		<div class="col-6 d-flex justify-content-start">
+			<div class="card shadow-sm h-100 w-100">
+				<div class="card-body">
+					<div class="card-title">
+						<div class="h2">ADMINISTRADOR</div>
+					</div>
+					<div class="card-text">
+						<div class="fs-4">Jhon Doe</div>
+						<div class="fs-4 fst-italic text-muted">@jhondoe</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3 d-flex align-items-center">
+		<div class="col-6">{{ form.name.label }}:</div>
+		<div class="col-6">
+			{{form.name(class="form-control", disabled="true", value="Jhon")}}
+		</div>
+	</div>
+	<div class="row mb-3 d-flex align-items-center">
+		<div class="col-6">{{ form.last_name.label }}:</div>
+		<div class="col-6">
+			{{form.last_name(class="form-control", disabled="true", value="Doe")}}
+		</div>
+	</div>
+	<div class="row mb-3 d-flex align-items-center">
+		<div class="col-6">{{ form.date.label }}:</div>
+		<div class="col-6">
+			{{form.date(class="form-control text-end", value="1984-08-17")}}
+		</div>
+	</div>
+	<div class="row mt-2">
+		<div class="col-12 d-flex justify-content-end">
+			<!-- Editar para actializar la informacion del usuario {{id}} -->
+			<a href="./user/1" class="btn btn-primary">Editar informacion</a>
+		</div>
+	</div>
+	<div class="row mt-2">
+		<div class="col-12 d-flex justify-content-end">
+			<!-- Editar para actializar la informacion del usuario {{id}} -->
+			<a href="../password/change" class="btn btn-outline-danger">Actualizar contraseña</a>
+		</div>
+	</div>
+</div>
+{%endblock%}

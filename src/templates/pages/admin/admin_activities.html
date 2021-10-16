@@ -1,2 +1,17 @@
 {%extends './layouts/layout_admin.html' %}
 {%block subtitle%}Activities{%endblock%}
+
+
+{%block right%}
+	<div class="row p-2 d-flex justify-content-end gap-3 col-3 ms-auto">
+		{{ render_partial('./components/component_tile.html', label="Actividades", number="23", icon="book", info="") }}
+	</div>
+	<div class="row h1 p-2">Actividades registradas</div>
+	<div class="row p-2">
+		<a href="/activities/new" class="btn btn-primary col-3">Nueva actividad</a>
+	</div>
+	<div class="row p-2">
+		{{ render_partial('./components/component_table.html', data = table) }}
+	</div>
+{%endblock%}
+
