@@ -35,10 +35,6 @@ class Auth:
             return redirect("/login")
         return render_template('./pages/page_remember_password.html', form=form)
 
-    def submit():
-        form = LoginForm()
-        if form.validate_on_submit():
-            return redirect('/example')
 
     def change():
         form = ChangePassword()
