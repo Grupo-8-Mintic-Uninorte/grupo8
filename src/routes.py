@@ -9,7 +9,6 @@ app.add_url_rule('/example', view_func=Views.example)
 
 app.add_url_rule('/login', view_func=Auth.login, methods=["GET", "POST"])
 app.add_url_rule('/logout', view_func=Auth.logout)
-app.add_url_rule('/submit', view_func=Auth.submit)
 app.add_url_rule('/password/remember', view_func=Auth.remember, methods=["GET", "POST"])
 app.add_url_rule('/password/change', view_func=Auth.change, methods=["GET", "POST"])
 
