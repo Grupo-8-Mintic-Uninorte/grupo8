@@ -1,0 +1,126 @@
+{%extends './layouts/layout_base.html' %}
+{%block title %}Nuevo curso{% endblock %}
+
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row mt-2 mb-3">
+			<h1 class="col p-3 text-uppercase text-center">Nuevo usuario</h1>
+		</div>
+		<div class="col col-md-8 mx-auto d-flex flex-column flex-sm-row">
+			<div class="col col-sm-4 d-flex align-items-start justify-content-center mx-auto mb-3">
+				<div class="card bg-primary border border-primary userphoto">
+					<img src="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg" alt="imagen de usuario" class="card-img-top w-100 b-0 d-flex justify-content-center align-items-center">
+					<div class="card-body">
+						<!-- <div class="card-title">Jhon Doe</div> -->
+						<!-- <div class="card-text">Agrege una imagen para el usuario</div> -->
+						<div class="row userphoto-content col-12 mx-auto">
+							{{ form.user_photo.label(for="userphoto", class="btn btn-secondary text-uppercase", label="") }}
+							{{ form.user_photo(id="userphoto", class="form-control") }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col col-sm-8 ps-sm-3">
+				<form action="" class="form" action="" method="POST" novalidate>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_role.label }}</div>
+						<div class="col-7">
+							{{ form.user_role(class="form-control")}}
+							{% for errors in form.errors.user_role %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_name.label }}</div>
+						<div class="col-7">
+							{{ form.user_name(class="form-control")}}
+							{% for errors in form.errors.user_name %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_lastname.label}}</div>
+						<div class="col-7">
+							{{ form.user_lastname(class="form-control") }}
+							{% for errors in form.errors.user_lastname %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_dateborn.label}}</div>
+						<div class="col-7">
+							{{ form.user_dateborn(class="form-control") }}
+							{% for errors in form.errors.user_dateborn %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_address.label }}</div>
+						<div class="col-7">
+							{{ form.user_address(class="form-control") }}
+							{% for errors in form.errors.user_address %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-5">{{ form.user_email.label }}</div>
+						<div class="col-7">
+							{{ form.user_email(class="form-control") }}
+							{% for errors in form.errors.user_email %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-5">{{ form.user_phone.label }}</div>
+						<div class="col-7">
+							{{ form.user_phone(class="form-control") }}
+							{% for errors in form.errors.user_phone %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-5">{{ form.user_active.label }}</div>
+						<div class="col-7">
+							{{ form.user_active(class="form-check") }}
+							{% for errors in form.errors.user_active %}
+								<div class="badge bg-danger">{{errors}}</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<div class="d-flex justify-content-end">
+						{{ form.submit(class="btn btn-primary") }}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<style>
+
+	.userphoto {
+		overflow: hidden;
+	}
+	.userphoto img {
+		height: 150px;
+		max-height: 150px;
+		width: auto;
+	}
+	.userphoto-content {
+		background: var(--bs-primary);
+		color: #fff;
+		background-color: #5e38a4;
+		border-color: #59359a;
+	}
+	.userphoto-content input {
+		display:none;
+	}
+</style>
+{%endblock%}

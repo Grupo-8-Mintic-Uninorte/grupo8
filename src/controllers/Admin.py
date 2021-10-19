@@ -3,7 +3,7 @@ from controllers.Decorators import access
 
 from jinja_partials import render_partial
 
-from controllers.Forms import UserProfile
+from controllers.Forms import UserProfile, NewCourse, NewUser
 
 # para generar una cadena aleatoria
 import random
@@ -17,13 +17,33 @@ class Admin:
 
     # USERS
     def users():
-        return render_template('./pages/admin/admin_users.html')
+        table = {
+            "titles": ['foto','apellidos', 'nombres', 'codigo', 'actiones'],
+            "styles": ['','',          '',      '',       'h-100 d-flex align-items-center justify-content-around'],
+            "rows": [
+                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
+                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+            ]
+        }
+        return render_template('./pages/admin/admin_users.html', table= table)
 
     def user(user_id=None):
         return render_template('./pages/page_user.html', id=user_id)
 
     def user_new():
-        return 'new user'
+        form = NewUser()
+        form.user_role.default = "0"
+        form.validate_on_submit()
+        form.process()
+        return render_template('./pages/page_new_user.html', form=form)
 
     def user_edit(user_id=None):
         return 'edit user {}'.format(user_id)
@@ -34,29 +54,22 @@ class Admin:
     # ACTIVITIES
     def activities():
         table = {
-            "titles": ['', 'actividad', 'curso', 'codigo', 'actiones'],
-            "styles": ['', '',          '',      '',       'd-flex justify-content-around'],
+            "titles": ['actividad', 'curso', 'codigo', 'actiones'],
+            "styles": ['',          '',      '',       'd-flex justify-content-around'],
             "rows": [
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['actividad prediseñada', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+
             ]
         }
         return render_template('./pages/admin/admin_activities.html', table=table)
@@ -76,38 +89,34 @@ class Admin:
     # COURSES
     def courses():
         table = {
-            "titles": ['', 'curso', 'profesor', 'codigo', 'actiones'],
-            "styles": ['', '',          '',      '',       'd-flex justify-content-around'],
+            "titles": ['curso', 'profesor', 'codigo', 'actiones'],
+            "styles": ['',          '',      '',       'd-flex justify-content-around'],
             "rows": [
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/icon.html', plural=False, icons='home'), 'actividad prediseñada', 'curso academico', 'ABC123456',
+                ['curso entrenido', 'curso academico', 'ABC123456',
                  render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])]
             ]
         }
-        return render_template('./pages/admin/admin_courses.html', table = table)
+        return render_template('./pages/admin/admin_courses.html', table=table)
 
     def course(course_id=None):
         return 'course {}'.format(course_id)
 
     def course_new():
-        return 'new course'
+        form = NewCourse()
+        form.professor_course.default = "0"
+        form.validate_on_submit()
+        form.process()
+        return render_template('./pages/page_new_course.html', form=form)
 
     def course_edit(course_id=None):
         return 'edit course {}'.format(course_id)

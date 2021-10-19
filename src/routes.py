@@ -35,5 +35,7 @@ app.add_url_rule('/admin/courses/new', view_func=Admin.course_new)
 app.add_url_rule('/admin/courses/edit/<int:course_id>', view_func=Admin.course_edit)
 app.add_url_rule('/admin/courses/delete/<int:course_id>', view_func=Admin.course_delete)
 
-
 app.add_url_rule('/admin/profile', view_func=Admin.profile)
+
+app.add_url_rule('/courses/new', view_func=Admin.course_new, methods=["GET", "POST"])
+app.add_url_rule('/users/new', view_func=Admin.user_new, methods=["GET", "POST"])

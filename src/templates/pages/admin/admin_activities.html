@@ -3,8 +3,15 @@
 
 
 {%block right%}
-	<div class="row p-2 d-flex justify-content-end gap-3 col-3 ms-auto">
-		{{ render_partial('./components/component_tile.html', label="Actividades", number="23", icon="book", info="") }}
+	<div class="row d-flex justify-content-end gap-3 ms-auto">
+		{{
+			render_partial(
+				'./components/component_tile.html',
+				cards=[
+					{"label":"Actividades", "number":"23", "icon":"hiking", "info":""}
+				]
+			)
+		}}
 	</div>
 	<div class="row h1 p-2">Actividades registradas</div>
 	<div class="row p-2">
