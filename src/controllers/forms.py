@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import PasswordField, SubmitField, BooleanField, StringField
 from wtforms.validators import ValidationError, DataRequired, InputRequired, Length, EqualTo, Email
 from wtforms.fields import SelectField, IntegerField, FileField
@@ -145,7 +146,15 @@ class NewCourse(FlaskForm):
 
 
 class NewUser(FlaskForm):
-    user_photo = FileField("Agregar foto")
+    user_photo = FileField(
+			label=("Agregar foto"),
+			validators=[
+				FileRequired("Imagen requerida"),
+				FileAllowed(
+					['jpg', 'png'], 'Solo imagenes! jpg, png'
+				)
+			]
+		)
     user_role = SelectField(
         label=('User Role'),
         choices=[
