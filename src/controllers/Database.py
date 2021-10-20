@@ -4,9 +4,11 @@ from sqlite3 import Error
 
 
 class Database:
-    def connect():
+    DB_LOCATION = 'notas.db'
+
+    def connect(self):
         try:
-            con = sqlite3.connect('./notas.db')
+            con = sqlite3.connect(DB_LOCATION)
             return con
         except Error:
             print(Error)
@@ -14,23 +16,20 @@ class Database:
     def create():
         return null
 
-    def read(table=None, where=None):
-        db = Database.connect()
-        data = db.execute('SELECT * from %s' % table)
+    def read(self, table=None, where=None):
+        data = self.connect.execute('SELECT * from %s' % table)
         return data.fetchall()
 
-    def readOne(table=None,fields=None, field=None, equalTo=None):
-        db = Database.connect()
-        data = db.execute('select %s from %s where %s=%d' %
+    def readOne(self, table=None,fields=None, field=None, equalTo=None):
+        data = self.connect.execute('select %s from %s where %s=%d' %
                           (fields, table, field, equalTo))
         return data.fetchall()
 
-    def delete(table = None, field_id = None, id = None):
-        db.Database.connect()
-        db.execute('delete from %s where %s=%d' % (table, field_id, id))
+    def delete(self, table = None, field_id = None, id = None):
+        self.connect.execute('delete from %s where %s=%d' % (table, field_id, id))
 
     def update():
         return null
 
     def close():
-        return null
+        self.connect.close()
