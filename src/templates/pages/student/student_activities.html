@@ -1,4 +1,4 @@
-{%extends './layouts/layout_admin.html' %}
+{%extends './layouts/layout_student.html' %}
 {%block subtitle%}Activities{%endblock%}
 
 
@@ -15,10 +15,6 @@
 	</div>
 	<div class="row h1 p-2">Actividades registradas</div>
 	<div class="row p-2">
-		<a href="activities/new" class="btn btn-primary col-3">Nueva actividad</a>
-	</div>
-	<div class="row p-2">
 		{{ render_partial('./components/component_table.html', data = table) }}
 	</div>
 {%endblock%}
-

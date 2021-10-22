@@ -1,12 +1,12 @@
 {%extends './layouts/layout_base.html'%}
-{%block title%}Admin {%block subtitle%}{%endblock%}{%endblock%}
+{%block title%}Professor {%block subtitle%}{%endblock%}{%endblock%}
 {%block content%}
 
 <div  class="bg-dark">
 	{{render_partial('./components/component_header_users.html')}}
 	<div class="d-flex flex-row flex-fill ">
 		<div class="col-2 bg-primary bg-opacity-50 d-flex flex-column">
-			{{render_partial('./components/component_sidebar_navigate.html')}}
+			{{render_partial('./components/component_sidebar_navigate_professor.html')}}
 		</div>
 		<div class="vr"></div>
 		<div class="container col-9 m-0 mx-auto bg-dark"">

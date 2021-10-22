@@ -1,5 +1,6 @@
-{%extends './layouts/layout_admin.html' %}
-{%block subtitle%}Courses{%endblock%}
+{%extends './layouts/layout_professor.html' %}
+{%block subtitle%}Activities{%endblock%}
+
 
 {%block right%}
 	<div class="row d-flex justify-content-end gap-3 ms-auto">
@@ -7,17 +8,16 @@
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-					{"label":"Cursos", "number":"5", "icon":"book", "info":""}
+					{"label":"Actividades", "number":"23", "icon":"hiking", "info":""}
 				]
 			)
 		}}
 	</div>
-	<div class="row h1 p-2">Cursos registrados</div>
+	<div class="row h1 p-2">Actividades registradas</div>
 	<div class="row p-2">
-		<a href="courses/new" class="btn btn-primary col-3">Nuevo curso</a>
+		<a href="/activities/new" class="btn btn-primary col-3">Nueva actividad</a>
 	</div>
 	<div class="row p-2">
 		{{ render_partial('./components/component_table.html', data = table) }}
 	</div>
 {%endblock%}
-
