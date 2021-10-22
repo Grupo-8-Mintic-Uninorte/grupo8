@@ -3,7 +3,7 @@ from controllers.Decorators import access
 
 from jinja_partials import render_partial
 
-from controllers.forms import UserProfile, NewCourse, NewUser
+from controllers.Forms import UserProfile, NewCourse, NewUser
 
 # para generar una cadena aleatoria
 import random

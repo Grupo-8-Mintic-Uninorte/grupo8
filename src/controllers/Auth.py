@@ -1,5 +1,5 @@
 from flask import render_template, redirect
-from controllers.forms import LoginForm, RememberPasswordForm, ChangePassword
+from controllers.Forms import LoginForm, RememberPasswordForm, ChangePassword
 
 
 class Auth:
