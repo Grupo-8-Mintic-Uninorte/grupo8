@@ -3,6 +3,16 @@ import jinja_partials
 from flask import Flask
 from controllers.Database import Database
 
+db = Database('notas.db')
+
+# print(db.readOne('users', "*", "user_id=2"))
+# db.create(
+#     'users',
+#     ['user_id', 'user_role', 'user_name', 'user_lastname'],
+#     [1,'Edwin', 'Marroquin']
+# )
+db.delete('users', 'user_id=5')
+print(db.readAll('users', "*"))
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')

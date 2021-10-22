@@ -17,6 +17,8 @@ class Auth:
         if(role == "admin" and email == "email@gmail.com" and password == "123456789"):
             return redirect('/admin')
         else:
+            form.select.default = role
+            form.email.data = email
             return render_template('./pages/page_login.html', form=form)
 
     def logout():
@@ -34,7 +36,6 @@ class Auth:
         if(email == "email@gmail.com"):
             return redirect("/login")
         return render_template('./pages/page_remember_password.html', form=form)
-
 
     def change():
         form = ChangePassword()
