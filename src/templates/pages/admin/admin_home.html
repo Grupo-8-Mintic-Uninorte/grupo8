@@ -1,2 +1,52 @@
 {%extends './layouts/layout_admin.html' %}
 {%block subtitle%}Home{%endblock%}
+{%block right%}
+<div class="row">
+    <div class="col-lg-6">
+        <div>
+            {{
+            render_partial(
+            './components/component_tile.html',
+            cards=[
+            {"label":"Cursos", "number":"40", "icon":"book", "info":""}
+            ]
+            )
+            }}
+        </div>
+        <div>
+            {{
+            render_partial(
+            './components/component_tile.html',
+            cards=[
+            {"label":"Profesores", "number":"12", "icon":"user", "info":""}
+            ]
+            )
+            }}
+        </div>
+        <div>
+            {{
+            render_partial(
+            './components/component_tile.html',
+            cards=[
+            {"label":"Estudiantes", "number":"100", "icon":"user", "info":""}
+            ]
+            )
+            }}
+        </div>
+        <div>
+            {{
+            render_partial(
+            './components/component_tile.html',
+            cards=[
+            {"label":"Actividades", "number":"40", "icon":"hiking", "info":""}
+            ]
+            )
+            }}
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <h1>hola</h1>
+    </div>
+</div>
+
+{%endblock%}

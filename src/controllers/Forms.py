@@ -94,6 +94,57 @@ class ChangePassword(FlaskForm):
     submit = SubmitField(label=('Update password'))
 
 
+class EditCourse(FlaskForm):
+    name_course = StringField(
+        label=("Nombre Curso"),
+        validators=[
+            DataRequired("El curso debe tener nombre"),
+            Length(min=20, message="El titulo debe contener mínimo %(min)d caracteres"),
+            Length(max=120, message="El titulo debe contener máximo %(min)d caracteres")
+        ]
+    )
+
+    professor_course = SelectField(
+        label=("Escoja un profesor"),
+        choices=[
+            ("0", "Select a professor"),
+            ("1", "Professor 1"),
+            ("2", "Professor 2"),
+            ("3", "Professor 3"),
+            ("4", "Professor 4"),
+        ],
+        validators=[InputRequired("debe escoger una opcion")]
+    )
+
+    description_course = StringField(
+        label=("Descripcion del curso"),
+        validators=[
+            DataRequired("La descripcion del curso es obligatoria"),
+            Length(
+                min=20, message="La descripcion debe contener mínimo %(min)d caracteres"),
+            Length(
+                max=200, message="La descripcion debe contener maximo %(max)d caracteres"),
+        ],
+        widget=TextArea()
+    )
+
+    schedule_course = DateField(
+        label=('Fecha de inicio'),
+        validators=[
+            DataRequired("Se require la fecha de inicio del curso")
+        ],
+        format='%Y/%m/%d'
+    )
+
+    max_students_course = IntegerField(
+        label=("Número de estudiantes"),
+        validators=[
+            DataRequired("Se require el numero de estudiantes edecuado")
+        ]
+    )
+    submit = SubmitField(label=('Create a course'))
+
+
 class NewCourse(FlaskForm):
     name_course = StringField(
         label=("Nombre Curso"),
@@ -208,3 +259,35 @@ class NewUser(FlaskForm):
     user_active = BooleanField("Usuario activo")
 
     submit = SubmitField("Registrar nuevo usuario")
+
+class NewActivity(FlaskForm):
+    name_activity = StringField(
+        label=("Nombre Actividad"),
+        validators=[
+            DataRequired("La actividad debe tener nombre"),
+            Length(min=20, message="El titulo debe contener mínimo %(min)d caracteres"),
+            Length(max=120, message="El titulo debe contener máximo %(min)d caracteres")
+        ]
+    )
+
+    description_activity = StringField(
+        label=("Descripcion de la actividad"),
+        validators=[
+            DataRequired("La descripcion del curso es obligatoria"),
+            Length(
+                min=20, message="La descripcion debe contener mínimo %(min)d caracteres"),
+            Length(
+                max=200, message="La descripcion debe contener maximo %(max)d caracteres"),
+        ],
+        widget=TextArea()
+    )
+
+    max_date = DateField(
+        label=('Fecha de inicio'),
+        validators=[
+            DataRequired("Se require la fecha de finalización de la actividad")
+        ],
+        format='%Y/%m/%d'
+    )
+
+    submit = SubmitField(label=('Create an activity'))

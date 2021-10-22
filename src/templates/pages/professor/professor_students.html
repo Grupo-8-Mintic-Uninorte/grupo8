@@ -1,0 +1,19 @@
+{%extends './layouts/layout_professor.html' %}
+{%block subtitle%}students{%endblock%}
+
+{%block right%}
+	<div class="row d-flex justify-content-end gap-3 ms-auto">
+		{{
+			render_partial(
+				'./components/component_tile.html',
+				cards=[
+					{"label":"Usuarios", "number":"125", "icon":"user", "info":""}
+				]
+			)
+		}}
+	</div>
+	<div class="row h1 p-2">Estudiantes registrados</div>
+	<div class="row p-2">
+		{{ render_partial('./components/component_table.html', data = table) }}
+	</div>
+{%endblock%}

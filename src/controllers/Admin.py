@@ -3,7 +3,7 @@ from controllers.Decorators import access
 
 from jinja_partials import render_partial
 
-from controllers.Forms import UserProfile, NewCourse, NewUser
+from controllers.forms import UserProfile, NewCourse, NewUser, NewActivity, EditCourse
 
 # para generar una cadena aleatoria
 import random
@@ -78,7 +78,10 @@ class Admin:
         return 'activity {}'.format(activity_id)
 
     def activity_new():
-        return 'new activity'
+        form = NewActivity()
+        form.validate_on_submit()
+        form.process()
+        return render_template('./pages/page_new_admin_activity.html', form=form)
 
     def activity_edit(activity_id=None):
         return 'edit activity {}'.format(activity_id)
@@ -119,6 +122,10 @@ class Admin:
         return render_template('./pages/page_new_course.html', form=form)
 
     def course_edit(course_id=None):
+        form = EditCourse()
+        form.professor_course.default = "0"
+        form.validate_on_submit()
+        form.process()
         return 'edit course {}'.format(course_id)
 
     def course_delete(course_id=None):
