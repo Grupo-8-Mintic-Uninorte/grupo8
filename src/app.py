@@ -15,13 +15,14 @@ db = Database('notas.db')
 
 # db.update(
 #     'users',
-#     ['user_id', 'user_role'],
-#     [5,1]
+#     ['user_role'],
+#     [2],
+#     "user_id=5"
 # )
 
 # db.delete('users', 'user_id=5')
 
-# print(db.readAll('users', "*"))
+print(db.readAll('users', "*"))
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
