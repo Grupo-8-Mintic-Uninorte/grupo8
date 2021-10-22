@@ -91,8 +91,32 @@ class Database:
         else:
             print("No es posible eliminar registros sin el identificador de comparacion")
 
-    def update(self):
-        return null
+    def update(self, table, fields, values):
+        try:
+            if len(fields) == len(values):
+
+                params = [f + ' = ?' for f in fields]
+                params.pop(0)
+                params = (', ').join(params)
+
+                where_column = fields[0]
+                where_value = values[0]
+
+                values.pop(0)
+
+                self.connect()
+                sql = """UPDATE %s SET %s WHERE %s=%d""" % (
+                    table, params, where_column, where_value)
+                print(sql)
+                self.con.execute(sql, values)
+                self.con.commit()
+            else:
+                return TypeError('Error en los datos')
+        except Error as e:
+            self.con.rollback()
+            print(e)
+        finally:
+            self.close()
 
     def close(self):
         self.con.close()
