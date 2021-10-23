@@ -174,3 +174,13 @@ class Database:
         self.read(table, fields, where)
         return self.data.fetchone()
         self.close()
+
+    def validate(self, table, fields="*", compares=[]):
+
+        c = ["%s='%s'" % (c[0], c[1]) for c in compares]
+        c = (" and ").join(c)
+        self.connect()
+        self.data = self.con.execute("SELECT %s FROM %s WHERE %s" % (fields, table, c))
+        data = self.data.fetchall()
+        print(data[0][0])
+        return True if len(data) == 1 else False
