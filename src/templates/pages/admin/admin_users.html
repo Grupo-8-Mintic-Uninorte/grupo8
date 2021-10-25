@@ -7,8 +7,8 @@
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-					{"label":"Estudiantes", "number": table.count_students , "icon":"user", "info":""},
-					{"label":"Profesores", "number": table.count_professors, "icon":"user", "info":""}
+					{"label":"Estudiantes","link":"/admin/users/role/students", "number": table.count_students , "icon":"user", "info":""},
+					{"label":"Profesores","link":"/admin/users/role/professors", "number": table.count_professors, "icon":"user", "info":""}
 				]
 			)
 		}}
