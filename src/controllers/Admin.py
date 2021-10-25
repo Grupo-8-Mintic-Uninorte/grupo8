@@ -11,6 +11,7 @@ from controllers.Database import Database
 
 db = Database('notas.db')
 
+
 class Admin:
     def home():
         cards = {
@@ -28,38 +29,40 @@ class Admin:
         return render_template('./pages/admin/admin_home.html', info_cards=cards)
 
     # USERS
-    def users(user_role=""):
+    def users(user_role="", page=""):
         if user_role == "":
             user_role = 'view_users'
+            page = '/admin/users'
         elif user_role == 'professors':
             user_role = 'view_professors'
         elif user_role == 'students':
             user_role = 'view_students'
         else:
+            page = '/admin/users'
             user_role == 'view_users'
 
         users = []
-        users_database= db.readAll(user_role, "*")
+        users_database = db.readAll(user_role, "*")
 
         for user in users_database:
             user = list(user)
             user.append(render_partial('./components/link.html', links=[
-                    {
-                        'route': 'user/%d' % user[0],
+                {
+                        'route': '..%s/%d' % (page, user[0]),
                         'action': 'primary',
                         'icon': 'eye'
-                    },
-                    {
-                        'route': 'user/edit/%d' % user[0],
-                        'action': 'success',
-                        'icon': 'edit'
-                    },
-                    {
-                        'route': 'user/delete/%d' % user[0],
-                        'action': 'danger',
-                        'icon': 'trash-alt'
-                    }
-                ]
+                        },
+                {
+                    'route': '..%s/edit/%d' % (page, user[0]),
+                    'action': 'success',
+                    'icon': 'edit'
+                },
+                {
+                    'route': '..%s/delete/%d' % (page, user[0]),
+                    'action': 'danger',
+                    'icon': 'trash-alt'
+                }
+            ]
             ))
             users.append(user)
 
@@ -73,7 +76,6 @@ class Admin:
             "rows": users
         }
 
-        print(table)
         return render_template('./pages/admin/admin_users.html', table=table)
 
     def user(user_id=None):
@@ -97,21 +99,23 @@ class Admin:
         activities = []
         activities_database = db.readAll('view_activities', "*")
 
+        print(activities_database)
+
         for activity in activities_database:
             activity = list(activity)
             activity.append(render_partial('./components/link.html', links=[
                 {
-                        'route': 'activity/%d' % activity[0],
-                        'action': 'primary',
-                        'icon': 'eye'
-                        },
+                    'route': 'activities/%d' % activity[0],
+                    'action': 'primary',
+                    'icon': 'eye'
+                },
                 {
-                    'route': 'activity/edit/%d' % activity[0],
+                    'route': 'activities/edit/%d' % activity[0],
                     'action': 'success',
                     'icon': 'edit'
                 },
                 {
-                    'route': 'activity/delete/%d' % activity[0],
+                    'route': 'activities/delete/%d' % activity[0],
                     'action': 'danger',
                     'icon': 'trash-alt'
                 }
@@ -120,8 +124,8 @@ class Admin:
             activities.append(activity)
 
         table = {
-            "titles": ['ID','ACTIVIDAD', 'DESCRIPCION', 'CURSO', 'ENTREGA','NOTA','actiones'],
-            "styles": ['',          '',      '','','','',       'd-flex justify-content-around'],
+            "titles": ['ID', 'ACTIVIDAD', 'DESCRIPCION', 'CURSO', 'ENTREGA', 'NOTA', 'actiones'],
+            "styles": ['',          '',      '', '', '', '',       'd-flex justify-content-around'],
             "rows": activities,
             "count_activities": len(activities)
         }
@@ -144,23 +148,36 @@ class Admin:
 
     # COURSES
     def courses():
+        courses = []
+        courses_database = db.readAll('view_courses', '*')
+
+        for c in courses_database:
+            course = list(c)
+            course.append(
+                render_partial('./components/link.html', links=[
+                    {
+                        'route': '../admin/courses/%d' % (course[0]),
+                        'action': 'primary',
+                        'icon': 'eye'
+                    },
+                    {
+                        'route': '../admin/courses/edit/%d' % (course[0]),
+                        'action': 'success',
+                        'icon': 'edit'
+                    },
+                    {
+                        'route': '../admin/courses/delete/%d' % (course[0]),
+                        'action': 'danger',
+                        'icon': 'trash-alt'
+                    },
+                ])
+            )
+            courses.append(course)
+
         table = {
-            "titles": ['curso', 'profesor', 'codigo', 'actiones'],
-            "styles": ['',          '',      '',       'd-flex justify-content-around'],
-            "rows": [
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['curso entrenido', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])]
-            ]
+            "titles": ['curso', 'NOMBRE PROFESOR', 'APELLIDO PROFESOR', 'CURSO', 'HORARIO', 'ACCIONES'],
+            "styles": ['visually-hidden',          '',      '','','',       'd-flex justify-content-around'],
+            "rows": courses
         }
         return render_template('./pages/admin/admin_courses.html', table=table)
 

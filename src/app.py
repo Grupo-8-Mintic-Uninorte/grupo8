@@ -30,7 +30,7 @@ db = Database('notas.db')
 #         "user_role",
 #         [ ("user_email", "marrokin2@gmail.com"), ("user_password", 123456789) ] ))
 
-print(db.readAll('view_users','*'))
+# print(db.readAll('view_users','*'))
 
 project_root = os.path.dirname(__file__)
 
