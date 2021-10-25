@@ -3,9 +3,11 @@ import jinja_partials
 
 from flask import Flask
 
-# from controllers.Database import Database
+from livereload import Server, shell
 
-# db = Database('notas.db')
+from controllers.Database import Database
+
+db = Database('notas.db')
 
 # print(db.readOne('users', "*", "user_id=2"))
 
@@ -28,6 +30,8 @@ from flask import Flask
 #         "user_role",
 #         [ ("user_email", "marrokin2@gmail.com"), ("user_password", 123456789) ] ))
 
+print(db.readAll('view_users','*'))
+
 project_root = os.path.dirname(__file__)
 
 template_path = os.path.join(project_root, 'templates')
@@ -35,6 +39,8 @@ template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
 
 app.secret_key = os.urandom(24)
+
+app.debug = True
 
 jinja_partials.register_extensions(app)
 
@@ -46,4 +52,8 @@ jinja_partials.register_extensions(app)
 import routes
 
 if __name__ == '__main__':
-    app.run()
+		server = Server(app.wsgi_app)
+		server.watch("/src/**")
+		server.watch("/static/**")
+		server.serve(port=5050)
+    # app.run()

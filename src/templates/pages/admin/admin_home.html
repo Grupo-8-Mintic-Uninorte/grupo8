@@ -1,16 +1,20 @@
-{%extends './layouts/layout_admin.html' %}
-{%block subtitle%}Home{%endblock%}
+{%extends './layouts/layout_admin.html' %} {%block subtitle%}Home{%endblock%}
 {%block right%}
-<div class="row">
-	{{ render_partial(
-	'./components/component_tile.html',
-	cards=[
-			{"label":"Cursos", "class": "col", "number":"40", "icon":"book"},
-			{"label":"Profesores", "class": "col", "number":"12", "icon":"user"},
-			{"label":"Estudiantes", "class": "col", "number":"100", "icon":"user"},
-			{"label":"Actividades", "class": "col", "number":"40", "icon":"hiking"}
-		]
-	) }}
+<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
+	{{
+		render_partial( './components/component_tile.html',
+		cards=[
+			{ "label":"Cursos", "link":"/admin/courses",
+			"number":info_cards.cursos, "icon":"book"},
+			{ "label":"Profesores", "link":"/admin/users/role/professors",
+			"number":info_cards.profesores, "icon":"user"},
+			{ "label":"Estudiantes", "link":"/admin/users/role/students",
+			"number":info_cards.estudiantes, "icon":"user"},
+			{ "label":"Actividades", "link":"/admin/activities",
+			"number":info_cards.actividades, "icon":"hiking"}
+			]
+		)
+	}}
 </div>
 
 {%endblock%}

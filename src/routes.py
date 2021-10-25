@@ -21,6 +21,7 @@ app.add_url_rule('/admin', view_func=Admin.home)
 app.add_url_rule('/professor', view_func=Professor.home_professor)
 
 app.add_url_rule('/admin/users', view_func=Admin.users)
+app.add_url_rule('/admin/users/role/<user_role>', view_func=Admin.users)
 app.add_url_rule('/admin/user/<int:user_id>', view_func=Admin.user)
 app.add_url_rule('/admin/users/new', view_func=Admin.user_new)
 app.add_url_rule('/admin/users/edit/<int:user_id>', view_func=Admin.user_edit)

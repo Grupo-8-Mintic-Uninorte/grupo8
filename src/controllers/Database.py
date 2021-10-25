@@ -53,6 +53,7 @@ class Database:
             self.close()
 
     def read(self, table, fields="*", where=""):
+
         """ Lee los registros en la base de datos
 
         Args:
@@ -153,7 +154,7 @@ class Database:
         return self.data.fetchall()
         self.close()
 
-    def readOne(self, table, fields, where):
+    def readOne(self, table, fields, where=""):
         """ Lee los registros en la base de datos
 
         Args:

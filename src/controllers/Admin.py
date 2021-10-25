@@ -1,3 +1,5 @@
+import string
+import random
 from flask import render_template
 from controllers.Decorators import access
 
@@ -5,35 +7,74 @@ from jinja_partials import render_partial
 
 from controllers.Forms import UserProfile, NewCourse, NewUser, NewActivity, EditCourse
 
-# para generar una cadena aleatoria
-import random
-import string
-letters = string.ascii_uppercase
+from controllers.Database import Database
 
+db = Database('notas.db')
 
 class Admin:
     def home():
-        return render_template('./pages/admin/admin_home.html')
+        cards = {
+            'actividades': 0,
+            'cursos': 0,
+            'profesores': 0,
+            'estudiantes': 0,
+
+        }
+        cards['actividades'] = db.readOne('count_activities', '*')[0]
+        cards['cursos'] = db.readOne('count_courses', '*')[0]
+        cards['profesores'] = db.readOne('count_professors', '*')[0]
+        cards['estudiantes'] = db.readOne('count_students', '*')[0]
+        print(cards)
+        return render_template('./pages/admin/admin_home.html', info_cards=cards)
 
     # USERS
-    def users():
+    def users(user_role=""):
+        if user_role == "":
+            user_role = 'view_users'
+        elif user_role == 'professors':
+            user_role = 'view_professors'
+        elif user_role == 'students':
+            user_role = 'view_students'
+        else:
+            user_role == 'view_users'
+
+        users = []
+        users_database= db.readAll(user_role, "*")
+
+        for user in users_database:
+            user = list(user)
+            user.append(render_partial('./components/link.html', links=[
+                    {
+                        'route': 'user/%d' % user[0],
+                        'action': 'primary',
+                        'icon': 'eye'
+                    },
+                    {
+                        'route': 'user/edit/%d' % user[0],
+                        'action': 'success',
+                        'icon': 'edit'
+                    },
+                    {
+                        'route': 'user/delete/%d' % user[0],
+                        'action': 'danger',
+                        'icon': 'trash-alt'
+                    }
+                ]
+            ))
+            users.append(user)
+
         table = {
-            "titles": ['foto','apellidos', 'nombres', 'codigo', 'actiones'],
-            "styles": ['','',          '',      '',       'h-100 d-flex align-items-center justify-content-around'],
-            "rows": [
-                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                [render_partial('./components/component_image.html', avatar=True, image="https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg", user_name="estudiante_anonimo_abc123456"),'apellido 1 apellido 2', 'nombre estudiante', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-            ]
+            "titles": ['ID', 'PERFIL', 'APELLIDOS', 'NOMBRE', 'CORREO ELECTRONICO', 'actiones'],
+            "styles": ['', '',          '',      '', '',       'h-100 d-flex align-items-center justify-content-around'],
+
+            "count_students": len(list(filter(lambda x: x[1] == 'ESTUDIANTE', users))),
+            "count_professors": len(list(filter(lambda x: x[1] == 'PROFESOR', users))),
+
+            "rows": users
         }
-        return render_template('./pages/admin/admin_users.html', table= table)
+
+        print(table)
+        return render_template('./pages/admin/admin_users.html', table=table)
 
     def user(user_id=None):
         return render_template('./pages/page_user.html', id=user_id)
@@ -53,24 +94,36 @@ class Admin:
 
     # ACTIVITIES
     def activities():
-        table = {
-            "titles": ['actividad', 'curso', 'codigo', 'actiones'],
-            "styles": ['',          '',      '',       'd-flex justify-content-around'],
-            "rows": [
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
-                ['actividad prediseñada', 'curso academico', 'ABC123456',
-                 render_partial('./components/icon.html', plural=True, icons=['edit btn btn-success', 'eye btn btn-primary', 'trash btn btn-warning'])],
+        activities = []
+        activities_database = db.readAll('view_activities', "*")
 
+        for activity in activities_database:
+            activity = list(activity)
+            activity.append(render_partial('./components/link.html', links=[
+                {
+                        'route': 'activity/%d' % activity[0],
+                        'action': 'primary',
+                        'icon': 'eye'
+                        },
+                {
+                    'route': 'activity/edit/%d' % activity[0],
+                    'action': 'success',
+                    'icon': 'edit'
+                },
+                {
+                    'route': 'activity/delete/%d' % activity[0],
+                    'action': 'danger',
+                    'icon': 'trash-alt'
+                }
             ]
+            ))
+            activities.append(activity)
+
+        table = {
+            "titles": ['ID','ACTIVIDAD', 'DESCRIPCION', 'CURSO', 'ENTREGA','NOTA','actiones'],
+            "styles": ['',          '',      '','','','',       'd-flex justify-content-around'],
+            "rows": activities,
+            "count_activities": len(activities)
         }
         return render_template('./pages/admin/admin_activities.html', table=table)
 
