@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import PasswordField, SubmitField, BooleanField, StringField
+from wtforms import PasswordField, SubmitField, BooleanField, StringField, HiddenField
 from wtforms.validators import ValidationError, DataRequired, InputRequired, Length, EqualTo, Email
 from wtforms.fields import SelectField, IntegerField, FileField
 from wtforms.fields.html5 import DateField, EmailField, TelField
@@ -100,13 +100,19 @@ class ChangePassword(FlaskForm):
 
 class EditCourse(FlaskForm):
     professors = []
-    professors_database = db.readAll('view_professors','user_name, user_lastname')
+    professors_database = db.readAll(
+        'view_professors', 'user_name, user_lastname')
     professors = list(professors_database)
 
-    professors = [(index, '%s %s' % (name[0], name[1])) for index, name in enumerate(professors) ]
+    professors = [(index, '%s %s' % (name[0], name[1]))
+                  for index, name in enumerate(professors)]
     professors.insert(0, ('0', 'Seleccione un profesor'))
 
-    name_course = StringField(
+    course_id = HiddenField(
+        default= len(professors_database) + 1
+    )
+
+    course_name = StringField(
         label=("Nombre Curso"),
         validators=[
             DataRequired("El curso debe tener nombre"),
@@ -114,13 +120,13 @@ class EditCourse(FlaskForm):
         ]
     )
 
-    professor_course = SelectField(
+    course_professor = SelectField(
         label=("Escoja un profesor"),
         choices=professors,
         validators=[InputRequired("debe escoger una opcion")]
     )
 
-    description_course = StringField(
+    course_description = StringField(
         label=("Descripcion del curso"),
         validators=[
             DataRequired("La descripcion del curso es obligatoria"),
@@ -130,7 +136,7 @@ class EditCourse(FlaskForm):
         widget=TextArea()
     )
 
-    schedule_course = DateField(
+    course_schedule = DateField(
         label=('Fecha de inicio'),
         validators=[
             InputRequired("Se require la fecha de inicio del curso")
@@ -138,24 +144,33 @@ class EditCourse(FlaskForm):
         format='%Y-%m-%d'
     )
 
-    max_students_course = IntegerField(
+    course_limit = IntegerField(
         label=("Número de estudiantes"),
         validators=[
             DataRequired("Se require el numero de estudiantes edecuado")
         ]
     )
+
     submit = SubmitField(label=('Create a course'))
 
 
 class NewCourse(FlaskForm):
     professors = []
-    professors_database = db.readAll('view_professors','user_name, user_lastname')
+    professors_database = db.readAll(
+        'view_professors', 'user_name, user_lastname')
     professors = list(professors_database)
 
-    professors = [(index, '%s %s' % (name[0], name[1])) for index, name in enumerate(professors) ]
+    professors = [(index, '%s %s' % (name[0], name[1]))
+                  for index, name in enumerate(professors)]
+
     professors.insert(0, ('0', 'Seleccione un profesor'))
 
-    name_course = StringField(
+    course_id = HiddenField(
+        default=len(professors_database) + 1
+    )
+
+
+    course_name = StringField(
         label=("Nombre Curso"),
         validators=[
             DataRequired("El curso debe tener nombre"),
@@ -163,13 +178,13 @@ class NewCourse(FlaskForm):
         ]
     )
 
-    professor_course = SelectField(
+    course_professor = SelectField(
         label=("Escoja un profesor"),
         choices=professors,
         validators=[InputRequired("debe escoger una opcion")]
     )
 
-    description_course = StringField(
+    course_description = StringField(
         label=("Descripcion del curso"),
         validators=[
             DataRequired("La descripcion del curso es obligatoria"),
@@ -179,7 +194,7 @@ class NewCourse(FlaskForm):
         widget=TextArea()
     )
 
-    schedule_course = DateField(
+    course_schedule = DateField(
         label=('Fecha de inicio'),
         validators=[
             DataRequired("Se require la fecha de inicio del curso")
@@ -187,7 +202,7 @@ class NewCourse(FlaskForm):
         format='%Y-%m-%d'
     )
 
-    max_students_course = IntegerField(
+    course_limit = IntegerField(
         label=("Número de estudiantes"),
         validators=[
             DataRequired("Se require el numero de estudiantes edecuado")

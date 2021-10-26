@@ -1,5 +1,6 @@
 import string
 import random
+from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request, abort, session
 from controllers.Decorators import access
 
@@ -92,7 +93,7 @@ class Admin:
 
     def user_delete(user_id=None):
         db.delete('users', "user_id=%d" % user_id)
-        flash("El usuario registrado con el id %d ha sido eliminado" % user_id, 'success')
+        flash("El usuario registrado con el id %d ha sido eliminado" % user_id, 'error')
         return redirect('/admin/users')
 
     # ACTIVITIES
@@ -146,6 +147,7 @@ class Admin:
 
     def activity_delete(activity_id=None):
         db.delete('activities', "activity_id=%d" % activity_id)
+        flash("La actividad registrada con el id %d ha sido eliminado" % activity_id, 'error')
         return redirect('/admin/activities')
 
     # COURSES
@@ -179,6 +181,7 @@ class Admin:
         table = {
             "titles": ['curso', 'NOMBRE PROFESOR', 'APELLIDO PROFESOR', 'CURSO', 'HORARIO', 'ACCIONES'],
             "styles": ['visually-hidden',          '',      '','','',       'd-flex justify-content-around'],
+            "count_courses": len(courses),
             "rows": courses
         }
         return render_template('./pages/admin/admin_courses.html', table=table)
@@ -188,24 +191,39 @@ class Admin:
 
     def course_new():
         form = NewCourse()
-        form.professor_course.select = 0
+        form.course_professor.select = 0
         if form.validate_on_submit():
-            print(form.data)
+            print(form.data.keys())
+            print(form.data.values())
 
         form.process()
 
-        return render_template('./pages/page_new_course.html', form=form)
+        return render_template('./pages/page_course_new.html', form=form)
 
 # TODO: crear fun generadora de insert dict de formulario
-    def course_edit(course_id=None):
+    def course_edit(course_id):
         form = EditCourse()
-        form.professor_course.select = 0
-        form.validate_on_submit()
-        form.process()
-        return 'edit course {}'.format(course_id)
+        course = db.readOne('courses', "*","course_id=%s" % course_id)
+        print(course)
+        form.course_id.default = course[0]
+        form.course_professor.select = course[1]
+        form.course_name.default = course[2]
+        form.course_description.default = course[3]
+        schedule = course[4]
+        form.course_schedule.default = datetime.strptime(
+            schedule, '%Y-%m-%d')
+        form.course_limit.default = course[5]
 
-    def course_delete(course_id=None):
+        if form.validate_on_submit():
+            print(form.data.keys())
+            print(form.data.values())
+
+        form.process()
+        return render_template('./pages/page_course_edit.html', form=form)
+
+    def course_delete(course_id):
         db.delete('courses', "course_id=%d" % course_id)
+        flash("El curso registrado con el id %d ha sido eliminado" % course_id, 'error')
         return redirect('/admin/courses')
 
     def profile():

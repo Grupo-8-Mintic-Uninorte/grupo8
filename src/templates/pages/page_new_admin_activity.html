@@ -4,48 +4,42 @@
 
 {%block right%}
 <div class="container col-lg-6 col-md-8 col-sm-10">
-    <div class="row m-5">
-        <h1 class="col p-3 text-uppercase text-center">Nueva actividad</h1>
-    </div>
-    <form action="" class="form" action="" method="POST" novalidate>
-        <div class="row mb-3">
-            <div class="col-4">{{ form.name_activity.label }}</div>
-            <div class="col-8">
-                {{ form.name_activity(class="form-control")}}
-                {% for errors in form.errors.name_course %}
-                    <div class="badge bg-danger">{{errors}}</div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-4">{{ form.description_activity.label}}</div>
-            <div class="col-8">
-                {{ form.description_activity(class="form-control") }}
-                {% for errors in form.errors.description_activity %}
-                    <div class="badge bg-danger">{{errors}}</div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-4">{{ form.max_date.label }}</div>
-            <div class="col-8">
-                {{ form.max_date(class="form-control") }}
-                {% for errors in form.errors.max_date %}
-                    <div class="badge bg-danger">{{errors}}</div>
-                {% endfor %}
-            </div>
-        </div>
+	<div class="row m-5">
+		<h1 class="col p-3 text-uppercase text-center">Nueva actividad</h1>
+	</div>
+	<form action="" class="form" action="" method="POST" novalidate>
+		{{ form.csrf_token() }}
+		<div class="row mb-3">
+			<div class="col-4">{{ form.name_activity.label }}</div>
+			<div class="col-8">
+				{{ form.name_activity(class="form-control")}}
+				{% for errors in form.errors.name_course %}
+				<div class="badge bg-danger">{{errors}}</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-4">{{ form.description_activity.label}}</div>
+			<div class="col-8">
+				{{ form.description_activity(class="form-control") }}
+				{% for errors in form.errors.description_activity %}
+				<div class="badge bg-danger">{{errors}}</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-4">{{ form.max_date.label }}</div>
+			<div class="col-8">
+				{{ form.max_date(class="form-control") }}
+				{% for errors in form.errors.max_date %}
+				<div class="badge bg-danger">{{errors}}</div>
+				{% endfor %}
+			</div>
+		</div>
 
-        <div class="d-flex justify-content-end">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
+		<div class="d-flex justify-content-end">
+			{{ form.submit(class="btn btn-primary") }}
+		</div>
+	</form>
 </div>
-<!-- {% for field, errors in form.errors.items() %}
-    <div class="alert alert-danger">
-    {% autoescape false %}
-        {{("<br/>").join(errors)}}
-    {% endautoescape %}
-    </div>
-{% endfor %} -->
 {%endblock%}
