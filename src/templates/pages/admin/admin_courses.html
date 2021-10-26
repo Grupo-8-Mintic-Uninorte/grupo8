@@ -2,22 +2,33 @@
 {%block subtitle%}Courses{%endblock%}
 
 {%block right%}
-	<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
-		{{
+<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
+	{{
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-					{"label":"Cursos", "number":"5", "icon":"book", "info":""}
+					{"label":"Cursos", "number":"", "icon":"book", "info":""}
 				]
 			)
 		}}
+</div>
+<div class="row h1 p-2">Cursos registrados</div>
+<div class="row p-2">
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<div
+		class="alert alert-warning alert-dismissible fade show position-fixed top-0 start-0">
+		<strong>{{message}}</strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
 	</div>
-	<div class="row h1 p-2">Cursos registrados</div>
-	<div class="row p-2">
-		<a href="courses/new" class="btn btn-primary col-3">Nuevo curso</a>
-	</div>
-	<div class="row p-2">
-		{{ render_partial('./components/component_table.html', data = table) }}
-	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	<a href="courses/new" class="btn btn-primary col-3">Nuevo curso</a>
+</div>
+<div class="row p-2">
+	{{ render_partial('./components/component_table.html', data = table) }}
+</div>
 {%endblock%}
-

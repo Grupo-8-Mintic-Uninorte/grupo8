@@ -6,6 +6,10 @@ from wtforms.fields import SelectField, IntegerField, FileField
 from wtforms.fields.html5 import DateField, EmailField, TelField
 from wtforms.widgets import TextArea
 
+from controllers.Database import Database
+
+db = Database('notas.db')
+
 
 class LoginForm(FlaskForm):
     select = SelectField(
@@ -95,24 +99,24 @@ class ChangePassword(FlaskForm):
 
 
 class EditCourse(FlaskForm):
+    professors = []
+    professors_database = db.readAll('view_professors','user_name, user_lastname')
+    professors = list(professors_database)
+
+    professors = [(index, '%s %s' % (name[0], name[1])) for index, name in enumerate(professors) ]
+    professors.insert(0, ('0', 'Seleccione un profesor'))
+
     name_course = StringField(
         label=("Nombre Curso"),
         validators=[
             DataRequired("El curso debe tener nombre"),
-            Length(min=20, message="El titulo debe contener mínimo %(min)d caracteres"),
             Length(max=120, message="El titulo debe contener máximo %(min)d caracteres")
         ]
     )
 
     professor_course = SelectField(
         label=("Escoja un profesor"),
-        choices=[
-            ("0", "Select a professor"),
-            ("1", "Professor 1"),
-            ("2", "Professor 2"),
-            ("3", "Professor 3"),
-            ("4", "Professor 4"),
-        ],
+        choices=professors,
         validators=[InputRequired("debe escoger una opcion")]
     )
 
@@ -120,8 +124,6 @@ class EditCourse(FlaskForm):
         label=("Descripcion del curso"),
         validators=[
             DataRequired("La descripcion del curso es obligatoria"),
-            Length(
-                min=20, message="La descripcion debe contener mínimo %(min)d caracteres"),
             Length(
                 max=200, message="La descripcion debe contener maximo %(max)d caracteres"),
         ],
@@ -131,9 +133,9 @@ class EditCourse(FlaskForm):
     schedule_course = DateField(
         label=('Fecha de inicio'),
         validators=[
-            DataRequired("Se require la fecha de inicio del curso")
+            InputRequired("Se require la fecha de inicio del curso")
         ],
-        format='%Y/%m/%d'
+        format='%Y-%m-%d'
     )
 
     max_students_course = IntegerField(
@@ -146,24 +148,24 @@ class EditCourse(FlaskForm):
 
 
 class NewCourse(FlaskForm):
+    professors = []
+    professors_database = db.readAll('view_professors','user_name, user_lastname')
+    professors = list(professors_database)
+
+    professors = [(index, '%s %s' % (name[0], name[1])) for index, name in enumerate(professors) ]
+    professors.insert(0, ('0', 'Seleccione un profesor'))
+
     name_course = StringField(
         label=("Nombre Curso"),
         validators=[
             DataRequired("El curso debe tener nombre"),
-            Length(min=20, message="El titulo debe contener mínimo %(min)d caracteres"),
             Length(max=120, message="El titulo debe contener máximo %(min)d caracteres")
         ]
     )
 
     professor_course = SelectField(
         label=("Escoja un profesor"),
-        choices=[
-            ("0", "Select a professor"),
-            ("1", "Professor 1"),
-            ("2", "Professor 2"),
-            ("3", "Professor 3"),
-            ("4", "Professor 4"),
-        ],
+        choices=professors,
         validators=[InputRequired("debe escoger una opcion")]
     )
 
@@ -171,8 +173,6 @@ class NewCourse(FlaskForm):
         label=("Descripcion del curso"),
         validators=[
             DataRequired("La descripcion del curso es obligatoria"),
-            Length(
-                min=20, message="La descripcion debe contener mínimo %(min)d caracteres"),
             Length(
                 max=200, message="La descripcion debe contener maximo %(max)d caracteres"),
         ],
@@ -184,7 +184,7 @@ class NewCourse(FlaskForm):
         validators=[
             DataRequired("Se require la fecha de inicio del curso")
         ],
-        format='%Y/%m/%d'
+        format='%Y-%m-%d'
     )
 
     max_students_course = IntegerField(
@@ -198,14 +198,14 @@ class NewCourse(FlaskForm):
 
 class NewUser(FlaskForm):
     user_photo = FileField(
-			label=("Agregar foto"),
-			validators=[
-				FileRequired("Imagen requerida"),
-				FileAllowed(
-					['jpg', 'png'], 'Solo imagenes! jpg, png'
-				)
-			]
-		)
+        label=("Agregar foto"),
+        validators=[
+            FileRequired("Imagen requerida"),
+            FileAllowed(
+                ['jpg', 'png'], 'Solo imagenes! jpg, png'
+            )
+        ]
+    )
     user_role = SelectField(
         label=('User Role'),
         choices=[
@@ -233,7 +233,7 @@ class NewUser(FlaskForm):
         validators=[
             DataRequired("Se require la fecha de inicio del usuario")
         ],
-        format='%Y/%m/%d'
+        format='%Y-%m-%d'
     )
     user_address = StringField(
         label=("Direccion"),
@@ -259,6 +259,7 @@ class NewUser(FlaskForm):
     user_active = BooleanField("Usuario activo")
 
     submit = SubmitField("Registrar nuevo usuario")
+
 
 class NewActivity(FlaskForm):
     name_activity = StringField(
@@ -287,7 +288,7 @@ class NewActivity(FlaskForm):
         validators=[
             DataRequired("Se require la fecha de finalización de la actividad")
         ],
-        format='%Y/%m/%d'
+        format='%Y-%m-%d'
     )
 
     submit = SubmitField(label=('Create an activity'))

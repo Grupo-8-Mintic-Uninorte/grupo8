@@ -4,11 +4,12 @@
 
 {%block right%}
 	<div class="container col-lg-6 col-md-8 col-sm-10">
-	
+
 		<div class="row m-5">
 			<h1 class="col p-3 text-uppercase text-center">Editar curso</h1>
 		</div>
 		<form action="" class="form" action="" method="POST" novalidate>
+			{{ form.csrf_token() }}
 			<div class="row mb-3">
 				<div class="col-4">{{ form.name_course.label }}</div>
 				<div class="col-8">

@@ -3,8 +3,8 @@
 
 
 {%block right%}
-	<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
-		{{
+<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
+	{{
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
@@ -12,13 +12,24 @@
 				]
 			)
 		}}
+</div>
+<div class="row h1 p-2">Actividades registradas</div>
+<div class="row p-2">
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<div
+		class="alert alert-warning alert-dismissible fade show position-fixed top-0 start-0">
+		<strong>{{message}}</strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
 	</div>
-	<div class="row h1 p-2">Actividades registradas</div>
-	<div class="row p-2">
-		<a href="activities/new" class="btn btn-primary col-3">Nueva actividad</a>
-	</div>
-	<div class="row p-2">
-		{{ render_partial('./components/component_table.html', data = table) }}
-	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	<a href="activities/new" class="btn btn-primary col-3">Nueva actividad</a>
+</div>
+<div class="row p-2">
+	{{ render_partial('./components/component_table.html', data = table) }}
+</div>
 {%endblock%}
-

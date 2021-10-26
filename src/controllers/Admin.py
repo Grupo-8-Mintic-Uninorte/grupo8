@@ -1,6 +1,6 @@
 import string
 import random
-from flask import render_template
+from flask import render_template, redirect, url_for, flash, request, abort, session
 from controllers.Decorators import access
 
 from jinja_partials import render_partial
@@ -25,7 +25,6 @@ class Admin:
         cards['cursos'] = db.readOne('count_courses', '*')[0]
         cards['profesores'] = db.readOne('count_professors', '*')[0]
         cards['estudiantes'] = db.readOne('count_students', '*')[0]
-        print(cards)
         return render_template('./pages/admin/admin_home.html', info_cards=cards)
 
     # USERS
@@ -92,7 +91,9 @@ class Admin:
         return 'edit user {}'.format(user_id)
 
     def user_delete(user_id=None):
-        return 'delete user'
+        db.delete('users', "user_id=%d" % user_id)
+        flash("El usuario registrado con el id %d ha sido eliminado" % user_id, 'success')
+        return redirect('/admin/users')
 
     # ACTIVITIES
     def activities():
@@ -144,7 +145,8 @@ class Admin:
         return 'edit activity {}'.format(activity_id)
 
     def activity_delete(activity_id=None):
-        return 'delete activity {}'.format(activity_id)
+        db.delete('activities', "activity_id=%d" % activity_id)
+        return redirect('/admin/activities')
 
     # COURSES
     def courses():
@@ -186,20 +188,25 @@ class Admin:
 
     def course_new():
         form = NewCourse()
-        form.professor_course.default = "0"
-        form.validate_on_submit()
+        form.professor_course.select = 0
+        if form.validate_on_submit():
+            print(form.data)
+
         form.process()
+
         return render_template('./pages/page_new_course.html', form=form)
 
+# TODO: crear fun generadora de insert dict de formulario
     def course_edit(course_id=None):
         form = EditCourse()
-        form.professor_course.default = "0"
+        form.professor_course.select = 0
         form.validate_on_submit()
         form.process()
         return 'edit course {}'.format(course_id)
 
     def course_delete(course_id=None):
-        return 'delete course {}'.format(course_id)
+        db.delete('courses', "course_id=%d" % course_id)
+        return redirect('/admin/courses')
 
     def profile():
         form = UserProfile()
