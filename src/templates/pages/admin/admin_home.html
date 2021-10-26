@@ -1,16 +1,16 @@
 {%extends './layouts/layout_admin.html' %} {%block subtitle%}Home{%endblock%}
 {%block right%}
-<div class="row row-cols-2 d-flex justify-content-center align-items-center h-100">
+<div class="row row-cols-md-3 row-cols-sm-1 d-flex justify-content-center align-items-start mt-4">
 	{{
 		render_partial( './components/component_tile.html',
 		cards=[
-		{ "label":"Estudiantes", "link":"/admin/users/role/students",
+		{ "label":"Estudiantes", "class": "flex-fill m-2","link":"/admin/users/role/students",
 		"number":info_cards.estudiantes, "icon":"user"},
-		{ "label":"Profesores", "link":"/admin/users/role/professors",
+		{ "label":"Profesores", "class": "flex-fill m-2","link":"/admin/users/role/professors",
 		"number":info_cards.profesores, "icon":"user"},
-		{ "label":"Cursos", "link":"/admin/courses",
+		{ "label":"Cursos", "class": "flex-fill m-2","link":"/admin/courses",
 		"number":info_cards.cursos, "icon":"book"},
-			{ "label":"Actividades", "link":"/admin/activities",
+			{ "label":"Actividades", "class": "flex-fill m-2","link":"/admin/activities",
 			"number":info_cards.actividades, "icon":"hiking"}
 			]
 		)

@@ -202,16 +202,19 @@ class Admin:
 
 # TODO: crear fun generadora de insert dict de formulario
     def course_edit(course_id):
-        form = EditCourse()
         course = db.readOne('courses', "*","course_id=%s" % course_id)
-        print(course)
+        professors = db.readAll('view_professors', '*')
+
+        professor_default = [(i, '%s %s' % (p[2], p[3])) for i,p in enumerate(professors) if p[0] == course[1]]
+        print(professor_default)
+        form = EditCourse()
+
         form.course_id.default = course[0]
-        form.course_professor.select = course[1]
         form.course_name.default = course[2]
+        form.course_professor.default = professor_default[0][0]
         form.course_description.default = course[3]
-        schedule = course[4]
         form.course_schedule.default = datetime.strptime(
-            schedule, '%Y-%m-%d')
+            course[4], '%Y-%m-%d')
         form.course_limit.default = course[5]
 
         if form.validate_on_submit():
@@ -219,6 +222,7 @@ class Admin:
             print(form.data.values())
 
         form.process()
+
         return render_template('./pages/page_course_edit.html', form=form)
 
     def course_delete(course_id):
