@@ -206,7 +206,7 @@ class Admin:
         professors = db.readAll('view_professors', '*')
 
         professor_default = [(i, '%s %s' % (p[2], p[3])) for i,p in enumerate(professors) if p[0] == course[1]]
-        print(professor_default)
+
         form = EditCourse()
 
         form.course_id.default = course[0]

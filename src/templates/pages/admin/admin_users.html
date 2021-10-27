@@ -2,13 +2,15 @@
 {%block subtitle%}Users{%endblock%}
 
 {%block right%}
-<div class="row row-cols-5 mt-4 mb-4 d-flex justify-content-end">
+<div class="row row-cols-sm-1 row-cols-md-4 mt-4 mb-4 d-flex justify-content-end">
 	{{
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-				{"label":"Estudiantes","link":"/admin/users/role/students", "number": table.count_students , "icon":"user", "info":""},
-				{"label":"Profesores","link":"/admin/users/role/professors", "number": table.count_professors, "icon":"user", "info":""}
+				{"label":"Estudiantes","class":"g-3","link":"/admin/users/role/students", "number": table.count_students , "icon":"users", "info":"", class:"{{ 'bg-dark' }}"},
+				{"label":"Profesores","class":"g-3","link":"/admin/users/role/professors",
+				"number": table.count_professors, "icon":"chalkboard-teacher", "info":"",
+				class:"{{ 'bg-dark' if request.endpoint == '/admin/users/role/students' }}"}
 				]
 				)
 			}}

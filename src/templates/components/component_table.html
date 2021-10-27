@@ -1,21 +1,23 @@
-<table class="table table-responsive align-middle table-dark table-hover table-striped table-bordered view--table">
-	<thead class="text-uppercase">
-		<tr>
-			{% for t in data["titles"] %}
-				<th class="text-center {{ data['styles'][data['titles'].index(t)] }}">{{ t }} </th>
-			{% endfor %}
-		</tr>
-	</thead>
-	<tbody>
-		{% for row in data["rows"] %}
-			<tr class="h-100">
-				{% for cell in row %}
-					<td class="h-100 text-center {{ data['styles'][row.index(cell)] }}">{{ cell }}</td>
+<div class="table-responsive h-auto">
+	<table class="table align-middle table-dark table-hover table-striped table-bordered view--table">
+		<thead class="text-uppercase table-light">
+			<tr >
+				{% for t in data["titles"] %}
+					<th class="text-center vertical-align ">{{ t }} </th>
 				{% endfor %}
 			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+		</thead>
+		<tbody class="view--table"" >
+			{% for row in data["rows"] %}
+				<tr class="h-auto">
+					{% for cell in row %}
+						<td class="text-center">{{ cell }}</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 <style>
 	.view--table{
 		height:100%;
