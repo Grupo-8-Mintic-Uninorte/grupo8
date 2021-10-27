@@ -1,21 +1,31 @@
-<ul class="nav navbar-dark flex-column">
+<ul class="nav navbar-light flex-column">
   <li class="nav-item">
-    <a id="home" class="nav-link text-white" href="/admin">HOME</a>
+    <a id="home" class="nav-link text-white d-flex align-items-center" href="/admin">
+			<i class="mdi mdi-24px mdi-home"></i>
+			<div class="d-none d-md-flex">HOME</div></a>
   </li>
   <li class="nav-item">
-    <a id="users" class="nav-link text-white" href="/admin/users">USERS</a>
+    <a id="users" class="nav-link text-white d-flex align-items-center" href="/admin/users">
+			<i class="mdi mdi-24px mdi-account-group"></i>
+			<div class="d-none d-md-flex">USERS</div></a>
   </li>
   <li class="nav-item">
-    <a id="courses" class="nav-link text-white" href="/admin/courses">COURSES</a>
+    <a id="courses" class="nav-link text-white d-flex align-items-center" href="/admin/courses">
+			<i class="mdi mdi-24px mdi-book-open-page-variant"></i>
+			<div class="d-none d-md-flex">COURSES</div></a>
   </li>
 	<li class="nav-item">
-    <a id="activities" class="nav-link text-white" href="/admin/activities">ACTIVITIES</a>
+    <a id="activities" class="nav-link text-white d-flex align-items-center" href="/admin/activities">
+			<i class="mdi mdi-24px mdi-layers"></i>
+			<div class="d-none d-md-flex">ACTIVITIES</div></a>
   </li>
 
 </ul>
 <ul class="mt-auto nav flex-column">
 	<li class="nav-item">
-		<a id="profile" href="/admin/profile" class="nav-link text-white">PROFILE</a>
+		<a id="profile" href="/admin/profile" class="nav-link text-white d-flex align-items-center">
+			<i class="mdi mdi-24px mdi-card-account-details"></i>
+			<div class="d-none d-md-flex">PROFILE</div></a>
 	</li>
 </ul>
 <script>
@@ -23,3 +33,13 @@
 		document.querySelector("#{{request.endpoint}}").classList.add("bg-primary")
 	})()
 </script>
+<style>
+	.nav-link > i{
+		width: 2rem;
+		height:2rem;
+		display:flex;
+		justify-content:center;
+		align-items: center;
+		margin-right: 1rem;
+	}
+</style>

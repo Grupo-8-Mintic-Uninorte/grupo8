@@ -55,12 +55,12 @@ class Admin:
                 {
                     'route': '..%s/edit/%d' % (page, user[0]),
                     'action': 'success',
-                    'icon': 'edit'
+                    'icon': 'pencil'
                 },
                 {
                     'route': '..%s/delete/%d' % (page, user[0]),
                     'action': 'danger',
-                    'icon': 'trash-alt'
+                    'icon': 'delete'
                 }
             ]
             ))
@@ -114,12 +114,12 @@ class Admin:
                 {
                     'route': 'activities/edit/%d' % activity[0],
                     'action': 'success',
-                    'icon': 'edit'
+                    'icon': 'pencil'
                 },
                 {
                     'route': 'activities/delete/%d' % activity[0],
                     'action': 'danger',
-                    'icon': 'trash-alt'
+                    'icon': 'delete'
                 }
             ]
             ))
@@ -167,12 +167,12 @@ class Admin:
                     {
                         'route': '../admin/courses/edit/%d' % (course[0]),
                         'action': 'success',
-                        'icon': 'edit'
+                        'icon': 'pencil'
                     },
                     {
                         'route': '../admin/courses/delete/%d' % (course[0]),
                         'action': 'danger',
-                        'icon': 'trash-alt'
+                        'icon': 'delete'
                     },
                 ])
             )

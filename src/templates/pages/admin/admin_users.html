@@ -2,18 +2,32 @@
 {%block subtitle%}Users{%endblock%}
 
 {%block right%}
-<div class="row row-cols-sm-1 row-cols-md-4 mt-4 mb-4 d-flex justify-content-end">
+<div
+	class="row row-cols-sm-1 row-cols-md-4 mt-4 mb-4 d-flex justify-content-end">
 	{{
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-				{"label":"Estudiantes","class":"g-3","link":"/admin/users/role/students", "number": table.count_students , "icon":"users", "info":"", class:"{{ 'bg-dark' }}"},
-				{"label":"Profesores","class":"g-3","link":"/admin/users/role/professors",
-				"number": table.count_professors, "icon":"chalkboard-teacher", "info":"",
-				class:"{{ 'bg-dark' if request.endpoint == '/admin/users/role/students' }}"}
-				]
-				)
-			}}
+				{
+					"label":"Estudiantes",
+					"link":"/admin/users/role/students",
+					"number": table.count_students ,
+					"icon":"account-group",
+					"info":"",
+					"class":"g-3 view-%s" % table.count_students,
+				},
+				{
+					"label":"Profesores",
+					"class":"g-3",
+					"link":"/admin/users/role/professors",
+					"number": table.count_professors,
+					"icon":"human-male-board",
+					"info":"",
+					"class": "g-3 view-%s" % table.count_professors
+				}
+	]
+	)
+	}}
 </div>
 <div class="row h1 p-2">Usuarios registrados</div>
 <div class="row p-2">
@@ -34,4 +48,9 @@
 <div class="row p-2">
 	{{ render_partial('./components/component_table.html', data = table) }}
 </div>
+<style>
+.view-0 {
+	display: none;
+}
+</style>
 {%endblock%}

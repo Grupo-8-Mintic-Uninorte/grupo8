@@ -4,12 +4,12 @@
 
 <div  class="bg-dark">
 	{{render_partial('./components/component_header_users.html')}}
-	<div class="d-flex flex-row flex-fill ">
+	<div class="d-flex flex-row flex-fill overflow-hidden">
 		<div class="col-2 bg-primary bg-opacity-50 d-flex flex-column">
 			{{render_partial('./components/component_sidebar_navigate.html')}}
 		</div>
 		<div class="vr"></div>
-		<div class="container col-9 m-0 mx-auto bg-dark"">
+		<div class="container col-9 m-0 mx-auto bg-dark h-100">
 			{%block right%}
 			{%endblock%}
 		</div>

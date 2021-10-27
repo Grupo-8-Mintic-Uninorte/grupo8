@@ -1,6 +1,7 @@
 # Grupo 8
 
 ## Diseño
+
 [Diseño plantillas](https://www.figma.com/file/foeCJgr3Mo0N2j0mOmZZyd/Mi-primer-diseño-en-figma?node-id=0%3A1)
 
 ## Como iniciar

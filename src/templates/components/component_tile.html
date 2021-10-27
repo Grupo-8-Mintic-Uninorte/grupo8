@@ -1,8 +1,8 @@
 {% for card in cards %}
-	<a href="{{card.link}}" class="card bg-light p-4 ms-2 me-2 border-0 {{card.class}}">
+	<a href="{{card.link}}" class="card bg-light p-2 ps-4 pe-4 ms-2 me-2 border-0 {{card.class}}">
 		<div class="d-flex flex-row align-items-center">
 			<div class="d-flex justify-content-center">
-				<i class="fas fa-{{card.icon}} fa-6x text-dark"></i>
+				<i class="mdi mdi-{{card.icon}} mdi-120px text-dark"></i>
 			</div>
 			<div class="card-body d-flex flex-column justify-content-center flex-fill">
 				<h5 class="card-title text-end m-0">{{card.label}}</h5>
@@ -15,6 +15,10 @@
 		a.card {
 			text-decoration:none;
 			cursor:pointer;
+		}
+		.mdi-120px {
+			font-size:120px;
+			line-height: 1;
 		}
 	</style>
 {% endfor %}

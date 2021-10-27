@@ -1,6 +1,6 @@
 {% for link in links %}
 	<a href="{{link.route}}" class="c-icon btn btn-{{link.action}}">
-		<i class="fa fa-{{link.icon}}"></i>
+		<i class="mdi mdi-18px mdi-{{link.icon}}"></i>
 		{% if label in link %}
 			<span class="btn-label">{{link.label}}</span>
 		{% endif %}
