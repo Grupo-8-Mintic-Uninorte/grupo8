@@ -8,7 +8,12 @@
 			render_partial(
 				'./components/component_tile.html',
 				cards=[
-					{"label":"Cursos", "number": table.count_courses, "icon":"google-classroom", "info":""}
+					{
+						"label":"Cursos",
+						"number": table.count_courses,
+						"icon":"google-classroom",
+						"class":"g-3"
+					}
 				]
 			)
 		}}
@@ -29,7 +34,7 @@
 	{% endwith %}
 	<a href="courses/new" class="btn btn-primary col-3">Nuevo curso</a>
 </div>
-<div class="row p-2">
+<div class="row p-2 mh-50">
 	{{ render_partial('./components/component_table.html', data = table) }}
 </div>
 {%endblock%}

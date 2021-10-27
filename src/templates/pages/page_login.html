@@ -14,27 +14,35 @@
 			<div class="card-body p-4 p-sm-5">
 				<h5 class="card-title text-uppercase text-center mb-5 fw-light">LogIn
 				</h5>
-				{% for field, errors in form.errors.items() %}
-				<div class="alert alert-danger">{{('').join(errors)}}</div>
-				{% endfor %}
 				<form class="row g-3" action="" method="post" novalidate>
 					{{ form.csrf_token() }}
 
 					<div class="mb-2">
 						<div class="form-label d-flex justify-content-between">
-							{{ form.select.label }}</div>
+							{{ form.select.label }}
+						</div>
 						{{ form.select(class="form-select") }}
-
+						{% for errors in form.select.errors %}
+						<div class="badge bg-danger">{{('').join(errors)}}</div>
+						{% endfor %}
 					</div>
 					<div class="mb-2">
 						<div class="form-label d-flex justify-content-between">
-							{{ form.email.label }}</div>
+							{{ form.email.label }}
+						</div>
 						{{ form.email(class="form-control", placeholder="Email") }}
+						{% for errors in form.email.errors %}
+						<div class="badge bg-danger">{{('').join(errors)}}</div>
+						{% endfor %}
 					</div>
 					<div class="mb-5">
 						<div class="form-label d-flex justify-content-between">
-							{{ form.password.label }}</div>
+							{{ form.password.label }}
+						</div>
 						{{ form.password(class="form-control", placeholder="Password") }}
+						{% for errors in form.password.errors %}
+						<div class="badge bg-danger">{{('').join(errors)}}</div>
+						{% endfor %}
 					</div>
 					<div class="d-flex  justify-content-between">
 						<a class="text-white" href="/password/remember">Recovery

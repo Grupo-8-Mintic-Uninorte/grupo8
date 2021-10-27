@@ -1,7 +1,7 @@
 from flask import redirect, request
 from functools import wraps
 
-def access(f):
+def Access(f):
     @wraps(f)
     def decorated_function(*args, **kws):
         if (request.endpoint == "home"):

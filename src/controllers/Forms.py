@@ -10,16 +10,15 @@ from controllers.Database import Database
 
 db = Database('notas.db')
 
+choises_profile = [(i, p) for i, p in db.readAll('roles', '*')]
+choises_profile.insert(0, ('', 'Seleccione un perfil'))
+
+print(choises_profile)
 
 class LoginForm(FlaskForm):
     select = SelectField(
         label=('User Role'),
-        choices=[
-            ("", "Select a role"),
-            ("admin", "Administrator"),
-            ("professor", "Professors"),
-            ("student", "Student")
-        ],
+        choices=choises_profile,
         validators=[InputRequired("debe escoger una opcion")]
     )
     email = StringField(
@@ -212,23 +211,13 @@ class NewCourse(FlaskForm):
 
 
 class NewUser(FlaskForm):
-    user_photo = FileField(
-        label=("Agregar foto"),
-        validators=[
-            FileRequired("Imagen requerida"),
-            FileAllowed(
-                ['jpg', 'png'], 'Solo imagenes! jpg, png'
-            )
-        ]
+    user_id = HiddenField(
+        default=len(db.readAll('users', 'user_id')) + 1
     )
+
     user_role = SelectField(
         label=('User Role'),
-        choices=[
-            ("", "Select a role"),
-            ("admin", "Administrator"),
-            ("professor", "Professors"),
-            ("student", "Student")
-        ],
+        choices=choises_profile,
         validators=[InputRequired("debe escoger una opcion")]
     )
     user_name = StringField(
@@ -250,12 +239,6 @@ class NewUser(FlaskForm):
         ],
         format='%Y-%m-%d'
     )
-    user_address = StringField(
-        label=("Direccion"),
-        validators=[
-            DataRequired("Direccion de usuario requerido")
-        ]
-    )
     user_email = EmailField(
         label=('Email'),
         validators=[
@@ -264,6 +247,7 @@ class NewUser(FlaskForm):
             Length(max=120, message="no puede ser mayor a %(max)d caracteres")
         ]
     )
+
     user_phone = TelField(
         label=('Telefono'),
         validators=[
@@ -271,13 +255,16 @@ class NewUser(FlaskForm):
         ]
     )
 
+    user_password = PasswordField()
+    confirm_password = PasswordField()
+
     user_active = BooleanField("Usuario activo")
 
     submit = SubmitField("Registrar nuevo usuario")
 
 
 class NewActivity(FlaskForm):
-    name_activity = StringField(
+    activity_name = StringField(
         label=("Nombre Actividad"),
         validators=[
             DataRequired("La actividad debe tener nombre"),
@@ -286,7 +273,7 @@ class NewActivity(FlaskForm):
         ]
     )
 
-    description_activity = StringField(
+    activity_description = StringField(
         label=("Descripcion de la actividad"),
         validators=[
             DataRequired("La descripcion del curso es obligatoria"),

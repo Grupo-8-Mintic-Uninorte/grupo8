@@ -1,4 +1,4 @@
-<div class="table-responsive h-100">
+<div class="table-responsive h-100 table-view">
 	<table class="table align-middle table-dark table-hover table-striped table-bordered view--table">
 		<thead class="text-uppercase table-light">
 			<tr >
@@ -19,8 +19,19 @@
 	</table>
 </div>
 <style>
-	.view--table{
+	.table-view{
+		display:flex;
+		flex:1;
 		height:100%;
-		overflow-y: auto;
+	}
+
+	.table-view thead th {
+		position:sticky;
+		z-index: 1;
+	}
+
+	.table-view tbody {
+		height: 100%;
+		overflow-y: scroll;
 	}
 </style>

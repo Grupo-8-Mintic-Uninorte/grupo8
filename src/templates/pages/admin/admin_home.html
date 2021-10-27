@@ -1,21 +1,40 @@
-{%extends './layouts/layout_admin.html' %} {%block subtitle%}Home{%endblock%}
+{%extends './layouts/layout_admin.html' %}
+{%block subtitle%}Home{%endblock%}
 {%block right%}
 <div
 	class="row row-cols-sm-1 row-cols-md-3 mt-4 mb-4 d-flex justify-content-end">
 	{{
 		render_partial( './components/component_tile.html',
 		cards=[
-		{ "label":"Estudiantes", "class": "flex-fill m-2","link":"/admin/users/role/students",
-		"number":info_cards.estudiantes, "icon":"account-group"},
-		{ "label":"Profesores", "class": "flex-fill m-2","link":"/admin/users/role/professors",
-		"number":info_cards.profesores, "icon":"human-male-board"},
-		{ "label":"Cursos", "class": "flex-fill m-2","link":"/admin/courses",
-		"number":info_cards.cursos, "icon":"google-classroom"},
-			{ "label":"Actividades", "class": "flex-fill m-2","link":"/admin/activities",
-			"number":info_cards.actividades, "icon":"layers"}
-			]
-		)
+			{
+				"label":"Estudiantes",
+				"link":"/admin/users/role/students",
+				"number":info_cards.estudiantes,
+				"icon":"account-group",
+				"class": "g-3 flex-fill",
+			},
+			{
+				"label":"Profesores",
+				"class": "g-3 flex-fill",
+				"link":"/admin/users/role/professors",
+				"number":info_cards.profesores,
+				"icon":"human-male-board"
+			},
+			{
+				"label":"Cursos",
+				"link":"/admin/courses",
+				"number":info_cards.cursos,
+				"icon":"google-classroom",
+				"class": "g-3 flex-fill",
+			},
+			{
+				"label":"Actividades",
+				"link":"/admin/activities",
+				"number":info_cards.actividades,
+				"icon":"layers",
+				"class": "g-3 flex-fill",
+			}
+		])
 	}}
 </div>
-
 {%endblock%}

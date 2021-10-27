@@ -2,7 +2,7 @@ import string
 import random
 from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request, abort, session
-from controllers.Decorators import access
+from controllers.Decorators import Access
 
 from jinja_partials import render_partial
 
@@ -14,6 +14,7 @@ db = Database('notas.db')
 
 
 class Admin:
+    @Access
     def home():
         cards = {
             'actividades': 0,
@@ -83,13 +84,28 @@ class Admin:
 
     def user_new():
         form = NewUser()
-        form.user_role.default = "0"
+        form.user_role.default = "student"
         form.validate_on_submit()
         form.process()
-        return render_template('./pages/page_new_user.html', form=form)
+        return render_template('./pages/page_user_new.html', form=form)
 
-    def user_edit(user_id=None):
-        return 'edit user {}'.format(user_id)
+    def user_edit(user_id):
+        user_database = db.readOne('users', "*", "user_id=%d" % user_id)
+        form = NewUser()
+
+        form.user_id.default = user_database[0]
+        form.user_name.default = user_database[2]
+        form.user_lastname.default = user_database[3]
+        form.user_dateborn.default = datetime.strptime(user_database[4], '%Y-%m-%d').date()
+        form.user_email.default = user_database[5]
+        form.user_phone.default = user_database[6]
+        form.user_active.default = user_database[8]
+        if form.validate_on_submit():
+            db.update('users', form.data.keys(), form.data.values(), "user_id=%d" % user_id, )
+            flash("El usuario registrado con el id %d ha sido editado" % user_id, 'success')
+            return redirect('/admin/users')
+        form.process()
+        return render_template('./pages/page_user_edit.html', form=form)
 
     def user_delete(user_id=None):
         db.delete('users', "user_id=%d" % user_id)
@@ -201,6 +217,7 @@ class Admin:
         return render_template('./pages/page_course_new.html', form=form)
 
 # TODO: crear fun generadora de insert dict de formulario
+
     def course_edit(course_id):
         course = db.readOne('courses', "*","course_id=%s" % course_id)
         professors = db.readAll('view_professors', '*')

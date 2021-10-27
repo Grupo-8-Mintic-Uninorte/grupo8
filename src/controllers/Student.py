@@ -1,5 +1,5 @@
 from flask import render_template
-from controllers.Decorators import access
+from controllers.Decorators import Access
 
 from jinja_partials import render_partial
 
