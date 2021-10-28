@@ -30,7 +30,7 @@ class Database:
         """
 
         try:
-            if len(fields) == len(values) + 1:
+            if len(fields) == len(values):
 
                 params = ["?" for v in fields]
                 params = (", ").join(params)
@@ -40,7 +40,7 @@ class Database:
                 self.connect()
                 sql = "INSERT INTO %s (%s) VALUES(%s)" % (
                     table, fields, params)
-                values.insert(0, len(self.readAll(table, "*")) + 1)
+                # values.insert(0, len(self.readAll(table, "*")) + 1)
 
                 self.con.execute(sql, values)
                 self.con.commit()
@@ -49,8 +49,8 @@ class Database:
         except Error as e:
             self.con.rollback()
             print(e)
-        finally:
-            self.close()
+
+        self.close()
 
     def read(self, table, fields="*", where=""):
 

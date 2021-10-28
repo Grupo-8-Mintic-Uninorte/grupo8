@@ -88,8 +88,35 @@ class Admin:
     @Autorize.login
     def user_new():
         form = NewUser()
-        form.user_role.default = "student"
-        form.validate_on_submit()
+        if form.validate_on_submit():
+
+            # Campos que deben ser eliminados
+            clean_fields = [
+                'confirm_password',
+                'submit',
+                'csrf_token'
+            ]
+
+            #encriptacion del password
+            form.user_password.data = ''
+
+            # Convertir el formulario en listas
+            keys = list(form.data.keys())
+            values = list(form.data.values())
+
+            # Eliminar los campos que no se deben enviar
+            for c in clean_fields:
+                i = keys.index(c)
+                values.pop(i)
+                keys.remove(c)
+
+            try:
+                # Insertar el usuario en la base de datos
+                db.create('users', keys, values)
+                flash("El usuario ha sido registrado con exito", 'success')
+            except:
+                flash("Error en la consulta", 'error')
+            return redirect('/admin/users')
         form.process()
         return render_template('./pages/page_user_new.html', form=form)
 
@@ -106,7 +133,8 @@ class Admin:
         form.user_phone.default = user_database[6]
         form.user_active.default = user_database[8]
         if form.validate_on_submit():
-            db.update('users', form.data.keys(), form.data.values(), "user_id=%d" % user_id, )
+            # db.update('users', form.data.keys(), form.data.values(), "user_id=%d" % user_id, )
+            db.create('users', form.data.keys(), form.data.values(), "user_id=%d" % form.user_id.data, )
             flash("El usuario registrado con el id %d ha sido editado" % user_id, 'success')
             return redirect('/admin/users')
         form.process()
