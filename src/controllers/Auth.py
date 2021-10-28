@@ -1,31 +1,37 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for, flash, request, session
 from controllers.Forms import LoginForm, RememberPasswordForm, ChangePassword
+from controllers.Database import Database
 
+db = Database('notas.db')
 
 class Auth:
 
     def login():
         form = LoginForm()
         form.select.default = 1
-        role = email = password = None
+        user = None
+
         if form.validate_on_submit():
-            role = form.select.data
-            email = form.email.data
-            password = form.password.data
+            print(form.data)
+            user = db.validate('users', 'user_role', [
+                ('user_email', form.email.data),
+                ('user_password', form.password.data),
+                ('user_role', form.select.data)
+            ])
+            if user:
+                session['logged'] = user
+                session['role'] = form.select.data
+                print(session)
+                return redirect('/admin')
+            elif not user:
+                flash('Usuario o contraseña incorrecto')
+
+        return render_template('./pages/page_login.html', form=form)
 
         form.process()
-        if(role == "admin" and email == "email@gmail.com" and password == "123456789"):
-            return redirect('/admin')
-        elif(role == "student" and email == "email@gmail.com" and password == "123456789"):
-            return redirect('/student')
-        elif(role == "professor" and email == "email@gmail.com" and password == "123456789"):
-            return redirect('/professor')
-        else:
-            form.select.default = role
-            form.email.data = email
-            return render_template('./pages/page_login.html', form=form)
 
     def logout():
+        session.clear()
         return redirect('/')
 
     # @requires_auth

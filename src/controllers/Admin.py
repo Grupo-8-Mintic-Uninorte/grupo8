@@ -2,7 +2,7 @@ import string
 import random
 from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request, abort, session
-from controllers.Decorators import Access
+from controllers.Decorators import Autorize
 
 from jinja_partials import render_partial
 
@@ -12,10 +12,11 @@ from controllers.Database import Database
 
 db = Database('notas.db')
 
-
 class Admin:
-    @Access
+    @Autorize.login
+    @Autorize.is_admin
     def home():
+        print(session)
         cards = {
             'actividades': 0,
             'cursos': 0,
@@ -30,6 +31,7 @@ class Admin:
         return render_template('./pages/admin/admin_home.html', info_cards=cards)
 
     # USERS
+    @Autorize.login
     def users(user_role="", page=""):
         if user_role == "":
             user_role = 'view_users'
@@ -79,9 +81,11 @@ class Admin:
 
         return render_template('./pages/admin/admin_users.html', table=table)
 
+    @Autorize.login
     def user(user_id=None):
         return render_template('./pages/page_user.html', id=user_id)
 
+    @Autorize.login
     def user_new():
         form = NewUser()
         form.user_role.default = "student"
@@ -89,6 +93,7 @@ class Admin:
         form.process()
         return render_template('./pages/page_user_new.html', form=form)
 
+    @Autorize.login
     def user_edit(user_id):
         user_database = db.readOne('users', "*", "user_id=%d" % user_id)
         form = NewUser()
@@ -107,12 +112,14 @@ class Admin:
         form.process()
         return render_template('./pages/page_user_edit.html', form=form)
 
+    @Autorize.login
     def user_delete(user_id=None):
         db.delete('users', "user_id=%d" % user_id)
         flash("El usuario registrado con el id %d ha sido eliminado" % user_id, 'error')
         return redirect('/admin/users')
 
     # ACTIVITIES
+    @Autorize.login
     def activities():
         activities = []
         activities_database = db.readAll('view_activities', "*")
@@ -149,15 +156,18 @@ class Admin:
         }
         return render_template('./pages/admin/admin_activities.html', table=table)
 
+    @Autorize.login
     def activity(activity_id=None):
         return 'activity {}'.format(activity_id)
 
+    @Autorize.login
     def activity_new():
         form = NewActivity()
         form.validate_on_submit()
         form.process()
         return render_template('./pages/page_new_admin_activity.html', form=form)
 
+    @Autorize.login
     def activity_edit(activity_id=None):
         return 'edit activity {}'.format(activity_id)
 
@@ -167,6 +177,7 @@ class Admin:
         return redirect('/admin/activities')
 
     # COURSES
+    @Autorize.login
     def courses():
         courses = []
         courses_database = db.readAll('view_courses', '*')

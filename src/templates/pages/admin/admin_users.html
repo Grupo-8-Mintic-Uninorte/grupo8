@@ -3,7 +3,8 @@
 
 {%block right%}
 <div
-	class="row row-cols-sm-1 row-cols-md-4 mt-4 mb-4 d-flex justify-content-end">
+	class="row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-4 mb-4 d-flex
+	justify-content-end">
 	{{
 			render_partial(
 				'./components/component_tile.html',
@@ -17,7 +18,6 @@
 				},
 				{
 					"label":"Profesores",
-					"class":"g-3",
 					"link":"/admin/users/role/professors",
 					"number": table.count_professors,
 					"icon":"human-male-board",
@@ -27,8 +27,7 @@
 	)
 	}}
 </div>
-<div class="row h1 p-2">Usuarios registrados</div>
-<div class="row p-2">
+<div class="col d-flex mb-5 mt-5 justify-content-between align-items-center">
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
 	{% for message in messages %}
@@ -37,13 +36,14 @@
 		<strong>{{message}}</strong>
 		<button type="button" class="btn-close" data-bs-dismiss="alert"
 			aria-label="Close"></button>
-	</div>
-	{% endfor %}
-	{% endif %}
-	{% endwith %}
-	<a href="./users/new" class="btn btn-primary col-3">Nuevo usuario</a>
+		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+		<a href="./users/new" class="btn btn-primary col-3 ">Nuevo usuario</a>
+		<div class="row h1 p-2">Usuarios registrados</div>
 </div>
-<div class="row p-2 h-50 mh-50">
+<div class="row h-50 mh-50">
 	{{ render_partial('./components/component_table.html', data = table) }}
 </div>
 <style>

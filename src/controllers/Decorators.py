@@ -1,10 +1,45 @@
-from flask import redirect, request
+from flask import redirect, request, session, flash
 from functools import wraps
 
-def Access(f):
-    @wraps(f)
-    def decorated_function(*args, **kws):
-        if (request.endpoint == "home"):
-            print("Estas en el home")
-        return f(*args, **kws)
-    return decorated_function
+
+class Autorize:
+
+    def login(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if 'logged' in session:
+                return f(*args, **kwargs)
+            else:
+                flash('Acceso no autorizado')
+                return redirect('/login')
+        return wrap
+
+    def is_admin(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if session['role'] == '1':
+                return f(*args, **kwargs)
+            else:
+                flash('Acceso no autorizado')
+                return redirect('/login')
+        return wrap
+
+    def is_professor(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if session['role'] == '2':
+                return f(*args, **kwargs)
+            else:
+                flash('Acceso no autorizado')
+                return redirect('/login')
+        return wrap
+
+    def is_student(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if session['role'] == '3':
+                return f(*args, **kwargs)
+            else:
+                flash('Acceso no autorizado')
+                return redirect('/login')
+        return wrap

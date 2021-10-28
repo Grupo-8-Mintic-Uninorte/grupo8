@@ -13,7 +13,6 @@ db = Database('notas.db')
 choises_profile = [(i, p) for i, p in db.readAll('roles', '*')]
 choises_profile.insert(0, ('', 'Seleccione un perfil'))
 
-print(choises_profile)
 
 class LoginForm(FlaskForm):
     select = SelectField(
@@ -108,7 +107,7 @@ class EditCourse(FlaskForm):
     professors.insert(0, ('0', 'Seleccione un profesor'))
 
     course_id = HiddenField(
-        default= len(professors_database) + 1
+        default=len(professors_database) + 1
     )
 
     course_name = StringField(
@@ -167,7 +166,6 @@ class NewCourse(FlaskForm):
     course_id = HiddenField(
         default=len(professors_database) + 1
     )
-
 
     course_name = StringField(
         label=("Nombre Curso"),

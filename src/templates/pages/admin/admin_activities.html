@@ -19,8 +19,7 @@
 			)
 		}}
 </div>
-<div class="row h1 p-2">Actividades registradas</div>
-<div class="row p-2">
+<div class="col d-flex mb-5 mt-5 justify-content-between align-items-center">
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
 	{% for message in messages %}
@@ -34,6 +33,7 @@
 	{% endif %}
 	{% endwith %}
 	<a href="activities/new" class="btn btn-primary col-3">Nueva actividad</a>
+	<div class="row h1 p-2">Actividades registradas</div>
 </div>
 <div class="row p-2">
 	{{ render_partial('./components/component_table.html', data = table) }}

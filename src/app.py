@@ -3,11 +3,9 @@ import jinja_partials
 
 from flask import Flask
 
-from livereload import Server, shell
+# from controllers.Database import Database
 
-from controllers.Database import Database
-
-db = Database('notas.db')
+# db = Database('notas.db')
 
 # print(db.readOne('users', "*", "user_id=2"))
 
@@ -52,8 +50,4 @@ jinja_partials.register_extensions(app)
 import routes
 
 if __name__ == '__main__':
-		server = Server(app.wsgi_app)
-		server.watch("/src/**")
-		server.watch("/static/**")
-		server.serve(port=5050)
-    # app.run()
+    app.run()
