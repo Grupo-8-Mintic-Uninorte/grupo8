@@ -7,6 +7,7 @@ from wtforms.fields.html5 import DateField, EmailField, TelField
 from wtforms.widgets import TextArea
 
 from controllers.Database import Database
+from controllers.Secure import decrypt, encrypt
 
 db = Database('notas.db')
 
@@ -30,8 +31,6 @@ class LoginForm(FlaskForm):
     password = PasswordField(
         label=('Password'),
         validators=[
-            DataRequired('contraseña obligatoria'),
-            Length(min=8, message='la contraseña debe tener minimo %(min)d caracteres'),
             Length(max=32, message='la contraseña debe tener maximo %(max)d caracteres')
         ]
     )
@@ -77,20 +76,19 @@ class UserProfile(FlaskForm):
 
 
 class ChangePassword(FlaskForm):
-    edit_password = PasswordField(
-        label=('Password'),
+    user_id = HiddenField()
+    old_password = PasswordField(
+        label=('Old Password'),
         validators=[
-            DataRequired('contraseña obligatoria'),
-            EqualTo('confirm_password',
-                    message="las contraseñas deben ser iguales"),
-            Length(min=8, message='la contraseña debe tener minimo %(min)d caracteres'),
             Length(max=32, message='la contraseña debe tener maximo %(max)d caracteres')
         ]
     )
-    confirm_password = PasswordField(
-        label=('Confirm Password'),
+    new_password = PasswordField(
+        label=('New Password'),
         validators=[
-            DataRequired('no ha confirmado la contraseña')
+            DataRequired('Ingrese la nueva contraseña'),
+            Length(min=8, message='la contraseña debe tener minimo %(min)d caracteres'),
+            Length(max=32, message='la contraseña debe tener maximo %(max)d caracteres')
         ]
     )
     submit = SubmitField(label=('Update password'))

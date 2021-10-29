@@ -183,5 +183,5 @@ class Database:
         self.connect()
         self.data = self.con.execute("SELECT %s FROM %s WHERE %s" % (fields, table, c))
         data = self.data.fetchall()
-        print(data)
+        self.close()
         return True if len(data) == 1 else False

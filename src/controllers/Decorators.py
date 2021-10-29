@@ -10,36 +10,36 @@ class Autorize:
             if 'logged' in session:
                 return f(*args, **kwargs)
             else:
-                flash('Acceso no autorizado')
+                flash('No ha podido acceder.')
                 return redirect('/login')
         return wrap
 
     def is_admin(f):
         @wraps(f)
         def wrap(*args, **kwargs):
-            if session['role'] == '1':
+            if session['role'] == 1:
                 return f(*args, **kwargs)
             else:
-                flash('Acceso no autorizado')
+                flash('Perfil no autorizado')
                 return redirect('/login')
         return wrap
 
     def is_professor(f):
         @wraps(f)
         def wrap(*args, **kwargs):
-            if session['role'] == '2':
+            if session['role'] == 2:
                 return f(*args, **kwargs)
             else:
-                flash('Acceso no autorizado')
+                flash('Perfil no autorizado')
                 return redirect('/login')
         return wrap
 
     def is_student(f):
         @wraps(f)
         def wrap(*args, **kwargs):
-            if session['role'] == '3':
+            if session['role'] == 3:
                 return f(*args, **kwargs)
             else:
-                flash('Acceso no autorizado')
+                flash('Perfil no autorizado')
                 return redirect('/login')
         return wrap
