@@ -260,6 +260,25 @@ class NewUser(FlaskForm):
 
 
 class NewActivity(FlaskForm):
+    courses = []
+    courses_database = db.readAll(
+        'courses', 'course_name')
+    courses = list(courses_database)
+
+    courses = [(index, '%s' % name[0])
+               for index, name in enumerate(courses)]
+
+    courses.insert(0, ('0', 'Seleccione un curso'))
+
+    activity_id = HiddenField(
+        default=len(courses_database) + 1
+    )
+
+    activity_course = SelectField(
+        label=('Curso'),
+        choices=courses,
+        validators=[InputRequired("debe escoger una opcion")]
+    )
     activity_name = StringField(
         label=("Nombre Actividad"),
         validators=[
@@ -280,8 +299,13 @@ class NewActivity(FlaskForm):
         ],
         widget=TextArea()
     )
-
-    max_date = DateField(
+    activity_note = IntegerField(
+        label=("Nota máxima a alcanzar"),
+        validators=[
+            DataRequired("Se require la nota máxima a alcanzar")
+        ]
+    )
+    activity_deadline = DateField(
         label=('Fecha de inicio'),
         validators=[
             DataRequired("Se require la fecha de finalización de la actividad")

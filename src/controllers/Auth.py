@@ -16,7 +16,8 @@ class Auth:
         user = None
 
         if form.validate_on_submit():
-            user = db.readOne('users', 'user_id, user_email, user_password, user_role', 'user_email="%s"' % form.email.data)
+            user = db.readOne(
+                'users', 'user_id, user_email, user_password, user_role', 'user_email="%s"' % form.email.data)
 
             if user is not None:
                 if user[2] == '':
@@ -48,35 +49,8 @@ class Auth:
             else:
                 flash('Usuario no encontrado')
 
-        # if form.validate_on_submit():
-        #     validate = db.validate('users', 'user_id, user_email, user_password, user_role', [
-        #         ('user_email', form.email.data),
-        #         ('user_role', form.select.data)
-        #     ])
-
-        #     if validate:
-        #         user = db.readOne(
-        #             'users', 'user_id, user_email, user_password, user_role', "user_email='%s'" % form.email.data)
-
-        #         if user is not None:
-        #             session.permanent = True
-        #             session['logged'] = validate
-        #             session['role'] = user[3]
-
-        #             print(session)
-
-        #             if(user[2] == '' and form.email.data == user[1]):
-        #                 flash('Contraseña no definida')
-        #                 return redirect('./password/new/%s' % user[0])
-
-        #             if session.get('logged') and encrypt(form.password.data) == user[2]:
-        #                 return redirect('/admin')
-        #     else:
-        #         flash('Usuario o contraseña incorrecto')
-
         return render_template('./pages/page_login.html', form=form)
         form.process()
-
 
     def logout():
         session.clear()
@@ -84,27 +58,31 @@ class Auth:
 
     # @requires_auth
     def remember():
-        form=RememberPasswordForm()
+        form = RememberPasswordForm()
 
         return render_template('./pages/page_remember_password.html', form=form)
 
     def change(user_id=None):
-        form=ChangePassword()
+
+        form = ChangePassword()
+
         if user_id:
-            form.user_id.default=user_id
-        print(form.data)
+            form.user_id.default = user_id
+
         if form.validate_on_submit():
-            user=db.readOne('users', 'user_id, user_password',
-                            "user_id='%s'" % user_id)
-            print(form.data)
-            print(user)
+
+            user = db.readOne('users', 'user_id, user_password',
+                              "user_id='%s'" % user_id)
+
             if len(user) > 0 and user[1] == '':
-                password=encrypt(form.new_password.data)
-                print(password)
+
+                password = encrypt(form.new_password.data)
+
                 db.update('users', ['user_password'], [
                           password], 'user_id=%s' % user[0])
+
                 flash('Contraseña actualizada')
                 return redirect("/login")
-        form.process()
 
+        form.process()
         return render_template('./pages/page_change_password.html', form=form)

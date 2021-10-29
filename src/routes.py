@@ -14,7 +14,7 @@ app.add_url_rule('/logout', view_func=Auth.logout)
 app.add_url_rule('/password/remember', view_func=Auth.remember,
                  methods=["GET", "POST"])
 app.add_url_rule('/password/new/<user_id>', view_func=Auth.change,
-                 methods=["GET","POST"])
+                 methods=["GET", "POST"])
 
 
 # Admin Routes
@@ -23,30 +23,30 @@ app.add_url_rule('/admin', view_func=Admin.home)
 
 app.add_url_rule('/admin/users', view_func=Admin.users)
 app.add_url_rule('/admin/users/role/<user_role>', view_func=Admin.users)
-app.add_url_rule('/admin/users/<int:user_id>', view_func=Admin.user)
+app.add_url_rule('/admin/users/<user_id>', view_func=Admin.user)
 app.add_url_rule('/admin/users/new', view_func=Admin.user_new,
                  methods=["GET", "POST"])
-app.add_url_rule('/admin/users/edit/<int:user_id>',
+app.add_url_rule('/admin/users/edit/<user_id>',
                  view_func=Admin.user_edit, methods=["GET", "POST"])
-app.add_url_rule('/admin/users/delete/<int:user_id>',
+app.add_url_rule('/admin/users/delete/<user_id>',
                  view_func=Admin.user_delete)
 
 app.add_url_rule('/admin/activities', view_func=Admin.activities)
-app.add_url_rule('/admin/activities/<int:activity_id>',
+app.add_url_rule('/admin/activities/<activity_id>',
                  view_func=Admin.activity)
 app.add_url_rule('/admin/activities/new', view_func=Admin.activity_new)
-app.add_url_rule('/admin/activities/edit/<int:activity_id>',
+app.add_url_rule('/admin/activities/edit/<activity_id>',
                  view_func=Admin.activity_edit, methods=["GET", "POST"])
-app.add_url_rule('/admin/activities/delete/<int:activity_id>',
+app.add_url_rule('/admin/activities/delete/<activity_id>',
                  view_func=Admin.activity_delete)
 
 app.add_url_rule('/admin/courses', view_func=Admin.courses)
-app.add_url_rule('/admin/courses/<int:course_id>', view_func=Admin.course)
+app.add_url_rule('/admin/courses/<course_id>', view_func=Admin.course, methods=["GET", "POST"]) # 
 app.add_url_rule('/admin/courses/new',
                  view_func=Admin.course_new, methods=["GET", "POST"])
-app.add_url_rule('/admin/courses/edit/<int:course_id>',
+app.add_url_rule('/admin/courses/edit/<course_id>',
                  view_func=Admin.course_edit, methods=["GET", "POST"])
-app.add_url_rule('/admin/courses/delete/<int:course_id>',
+app.add_url_rule('/admin/courses/delete/<course_id>',
                  view_func=Admin.course_delete)
 
 app.add_url_rule('/admin/profile', view_func=Admin.profile)

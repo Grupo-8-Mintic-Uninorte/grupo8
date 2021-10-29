@@ -191,7 +191,28 @@ class Admin:
     @Autorize.login
     def activity_new():
         form = NewActivity()
-        form.validate_on_submit()
+        if form.validate_on_submit():
+            clean_fields = [
+                'submit',
+                'csrf_token'
+            ]
+            # Convertir el formulario en listas
+            keys = list(form.data.keys())
+            values = list(form.data.values())
+
+            # Eliminar los campos que no se deben enviar
+            for c in clean_fields:
+                i = keys.index(c)
+                values.pop(i)
+                keys.remove(c)
+
+            try:
+                # Insertar el usuario en la base de datos
+                db.create('activities', keys, values)
+                flash("La actividad ha sido registrada con exito", 'success')
+            except:
+                flash("Error en la consulta", 'error')
+            return redirect('/admin/activities')
         form.process()
         return render_template('./pages/page_new_admin_activity.html', form=form)
 
@@ -241,22 +262,41 @@ class Admin:
         }
         return render_template('./pages/admin/admin_courses.html', table=table)
 
-    def course(course_id=None):
-        return 'course {}'.format(course_id)
+    def course(course_id):
+        c = db.readOne('courses', '*', "course_id=%s" % course_id)
+        info_course= {
+            "   ": c[1],
+        }
+        print(info_course)
+        return render_template('./pages/page_course.html', course=info_course)
 
+    @Autorize.login
     def course_new():
         form = NewCourse()
-        form.course_professor.select = 0
         if form.validate_on_submit():
-            print(form.data.keys())
-            print(form.data.values())
-
+            clean_fields = [
+                'submit',
+                'csrf_token'
+            ]
+            keys = list(form.data.keys())
+            values = list(form.data.values())
+            for c in clean_fields:
+                i = keys.index(c)
+                values.pop(i)
+                keys.remove(c)
+            try:
+                print(values)
+                db.create('courses', keys, values)
+                flash("El curso ha sido registrado con exito", 'success')
+            except:
+                flash("Error en la consulta", 'error')
+            return redirect('/admin/courses')
         form.process()
 
         return render_template('./pages/page_course_new.html', form=form)
-
 # TODO: crear fun generadora de insert dict de formulario
 
+    @Autorize.login
     def course_edit(course_id):
         course = db.readOne('courses', "*","course_id=%s" % course_id)
         professors = db.readAll('view_professors', '*')

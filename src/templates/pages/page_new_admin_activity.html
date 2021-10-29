@@ -10,33 +10,50 @@
 	<form action="" class="form" action="" method="POST" novalidate>
 		{{ form.csrf_token() }}
 		<div class="row mb-3">
-			<div class="col-4">{{ form.name_activity.label }}</div>
+			<div class="col-4">{{ form.activity_name.label }}</div>
 			<div class="col-8">
-				{{ form.name_activity(class="form-control")}}
-				{% for errors in form.errors.name_course %}
+				{{ form.activity_name(class="form-control")}}
+				{% for errors in form.errors.activity_name %}
 				<div class="badge bg-danger">{{errors}}</div>
 				{% endfor %}
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-4">{{ form.description_activity.label}}</div>
+			<div class="col-4">{{ form.activity_course.label}}</div>
 			<div class="col-8">
-				{{ form.description_activity(class="form-control") }}
-				{% for errors in form.errors.description_activity %}
+				{{ form.activity_course(class="form-control") }}
+				{% for errors in form.errors.activity_course %}
 				<div class="badge bg-danger">{{errors}}</div>
 				{% endfor %}
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-4">{{ form.max_date.label }}</div>
+			<div class="col-4">{{ form.activity_description.label }}</div>
 			<div class="col-8">
-				{{ form.max_date(class="form-control") }}
-				{% for errors in form.errors.max_date %}
+				{{ form.activity_description(class="form-control") }}
+				{% for errors in form.errors.activity_description %}
 				<div class="badge bg-danger">{{errors}}</div>
 				{% endfor %}
 			</div>
 		</div>
-
+		<div class="row mb-3">
+			<div class="col-4">{{ form.activity_deadline.label }}</div>
+			<div class="col-8">
+				{{ form.activity_deadline(class="form-control") }}
+				{% for errors in form.errors.activity_deadline %}
+				<div class="badge bg-danger">{{errors}}</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-4">{{ form.activity_note.label }}</div>
+			<div class="col-8">
+				{{ form.activity_note(class="form-control") }}
+				{% for errors in form.errors.activity_note %}
+				<div class="badge bg-danger">{{errors}}</div>
+				{% endfor %}
+			</div>
+		</div>
 		<div class="d-flex justify-content-end">
 			{{ form.submit(class="btn btn-primary") }}
 		</div>
