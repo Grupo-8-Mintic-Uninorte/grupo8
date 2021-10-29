@@ -18,8 +18,7 @@ class Auth:
         if form.validate_on_submit():
             user = db.readOne('users', 'user_id, user_email, user_password, user_role', 'user_email="%s"' % form.email.data)
 
-            print(user[2])
-            if len(user) > 0:
+            if user is not None:
                 if user[2] == '':
                     flash('El usuario no tiene contraseña asignada')
                     return redirect('/password/new/%s' % user[0])
@@ -29,16 +28,51 @@ class Auth:
                         ('user_email', form.email.data),
                         ('user_password', encrypt(form.password.data)),
                     ])
-
+                    print(validate)
                     if validate:
                         session.permanent = True
                         session['logged'] = True
                         session['role'] = user[3]
-                        return redirect('/admin')
+
+                        if session['role'] == 1:
+                            return redirect('/admin')
+
+                        if session['role'] == 2:
+                            return redirect('/professor')
+
+                        if session['role'] == 3:
+                            return redirect('/student')
+
                     else:
                         flash('Usuario o contraseña incorrectos')
             else:
                 flash('Usuario no encontrado')
+
+        # if form.validate_on_submit():
+        #     validate = db.validate('users', 'user_id, user_email, user_password, user_role', [
+        #         ('user_email', form.email.data),
+        #         ('user_role', form.select.data)
+        #     ])
+
+        #     if validate:
+        #         user = db.readOne(
+        #             'users', 'user_id, user_email, user_password, user_role', "user_email='%s'" % form.email.data)
+
+        #         if user is not None:
+        #             session.permanent = True
+        #             session['logged'] = validate
+        #             session['role'] = user[3]
+
+        #             print(session)
+
+        #             if(user[2] == '' and form.email.data == user[1]):
+        #                 flash('Contraseña no definida')
+        #                 return redirect('./password/new/%s' % user[0])
+
+        #             if session.get('logged') and encrypt(form.password.data) == user[2]:
+        #                 return redirect('/admin')
+        #     else:
+        #         flash('Usuario o contraseña incorrecto')
 
         return render_template('./pages/page_login.html', form=form)
         form.process()
