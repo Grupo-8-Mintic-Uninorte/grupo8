@@ -16,37 +16,31 @@ class Auth:
         user = None
 
         if form.validate_on_submit():
-            validate = db.validate('users', 'user_id, user_email, user_password, user_role', [
-                ('user_email', form.email.data),
-                ('user_role', form.select.data)
-            ])
+            user = db.readOne('users', 'user_id, user_email, user_password, user_role', 'user_email="%s"' % form.email.data)
 
-            print(validate)
+            print(user[2])
+            if len(user) > 0:
+                if user[2] == '':
+                    flash('El usuario no tiene contraseña asignada')
+                    return redirect('/password/new/%s' % user[0])
+                else:
+                    validate = db.validate('users', 'user_id, user_email, user_password, user_role', [
+                        ('user_role', form.select.data),
+                        ('user_email', form.email.data),
+                        ('user_password', encrypt(form.password.data)),
+                    ])
 
-            user = db.readOne(
-                'users', 'user_id, user_email, user_password, user_role', "user_email='%s'" % form.email.data)
+                    if validate:
+                        session.permanent = True
+                        session['logged'] = True
+                        session['role'] = user[3]
+                        return redirect('/admin')
+                    else:
+                        flash('Usuario o contraseña incorrectos')
+            else:
+                flash('Usuario no encontrado')
 
-            print(user)
-
-            if user:
-                session.permanent = True
-                session['logged'] = validate
-                session['role'] = user[3]
-
-                print(session)
-
-                if(user[2] == '' and form.email.data == user[1]):
-                    return redirect('./password/new/%s' % user[0])
-
-                if session.get('logged') and encrypt(form.password.data) == user[2]:
-                    return redirect('/admin')
-
-            elif not user:
-                flash('Usuario o contraseña incorrecto')
-
-        flash('Usuario o contraseña incorrecto')
         return render_template('./pages/page_login.html', form=form)
-
         form.process()
 
 
