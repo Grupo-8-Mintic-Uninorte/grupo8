@@ -51,14 +51,9 @@ class Admin:
             user = list(user)
             user.append(render_partial('./components/link.html', links=[
                 {
-                        'route': '..%s/%d' % (page, user[0]),
-                        'action': 'primary',
-                        'icon': 'eye'
-                        },
-                {
-                    'route': '..%s/edit/%d' % (page, user[0]),
-                    'action': 'success',
-                    'icon': 'pencil'
+                    'route': '../../profile/user/%d' % user[0],
+                    'action': 'primary',
+                    'icon': 'eye'
                 },
                 {
                     'route': '..%s/delete/%d' % (page, user[0]),
@@ -326,6 +321,3 @@ class Admin:
         flash("El curso registrado con el id %d ha sido eliminado" % course_id, 'error')
         return redirect('/admin/courses')
 
-    def profile():
-        form = UserProfile()
-        return render_template('./pages/admin/admin_profile.html', form=form)

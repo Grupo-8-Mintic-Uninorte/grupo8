@@ -254,7 +254,7 @@ class NewUser(FlaskForm):
     user_password = PasswordField()
     confirm_password = PasswordField()
 
-    user_active = BooleanField("Usuario activo")
+    user_active = BooleanField("Usuario activo", false_values = (False, 'false', 0, '0'))
 
     submit = SubmitField("Registrar nuevo usuario")
 

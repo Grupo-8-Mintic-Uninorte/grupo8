@@ -7,7 +7,6 @@ from controllers.Professor import Professor
 
 app.add_url_rule('/', view_func=Views.index)
 app.add_url_rule('/index', view_func=Views.index)
-app.add_url_rule('/example', view_func=Views.example)
 
 app.add_url_rule('/login', view_func=Auth.login, methods=["GET", "POST"])
 app.add_url_rule('/logout', view_func=Auth.logout)
@@ -41,15 +40,13 @@ app.add_url_rule('/admin/activities/delete/<activity_id>',
                  view_func=Admin.activity_delete)
 
 app.add_url_rule('/admin/courses', view_func=Admin.courses)
-app.add_url_rule('/admin/courses/<course_id>', view_func=Admin.course, methods=["GET", "POST"]) # 
+app.add_url_rule('/admin/courses/<course_id>', view_func=Admin.course, methods=["GET", "POST"]) #
 app.add_url_rule('/admin/courses/new',
                  view_func=Admin.course_new, methods=["GET", "POST"])
 app.add_url_rule('/admin/courses/edit/<course_id>',
                  view_func=Admin.course_edit, methods=["GET", "POST"])
 app.add_url_rule('/admin/courses/delete/<course_id>',
                  view_func=Admin.course_delete)
-
-app.add_url_rule('/admin/profile', view_func=Admin.profile)
 
 
 # Students routes
@@ -70,3 +67,5 @@ app.add_url_rule('/professor/activities',
 app.add_url_rule('/professor/profile', view_func=Professor.home_professor)
 app.add_url_rule('/professor/profile/edit',
                  view_func=Professor.home_professor, methods=["GET", "POST"])
+
+app.add_url_rule('/profile/user/<user_id>', view_func=Auth.profile, methods=["GET", "POST"])
